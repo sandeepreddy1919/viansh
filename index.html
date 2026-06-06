@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viansh Art Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0;500;0;600;0;700;1;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Satisfy&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        script: ['Satisfy', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .splash-hero {
+            background-color: #ffffff;
+            background-image: url('images/hero-banner.PNG'); 
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .splash-gallery {
+            background-color: #ffffff;
+            background-image: url('images/gallery-bg.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .splash-other-events {
+            background-color: #ffffff;
+            background-image: url('images/private.png'); 
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .splash-why-choose {
+            background-color: #ffffff;
+            background-image: url('images/why-choose-bg.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .splash-testimonials {
+            background-color: #ffffff;
+            background-image: url('images/testimonials-bg.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="font-sans text-[#2d2d2d] antialiased bg-[#fffcfc]">
+
+    <!-- Header Navigation -->
+    <header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100/50">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+            
+            <div class="flex items-center space-x-2">
+                <div class="flex items-center md:hidden order-1">
+                    <button id="menu-btn" class="text-gray-600 hover:text-purple-600 focus:outline-none p-1">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="flex flex-col order-2">
+                    <span class="text-2xl font-bold tracking-wide text-purple-700 font-serif flex items-center gap-1">
+                        Viansh <span class="text-xs text-pink-500 font-sans">🎨</span>
+                    </span>
+                    <span class="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold mt-0.5">WORKSHOPS.DIY STALLS.GIFTING</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-wider text-gray-600">
+                <a href="#home" class="hover:text-purple-600 transition">Home</a>
+                <a href="#about-founder" class="hover:text-purple-600 transition">About Us</a>
+                <a href="#workshops" class="hover:text-purple-600 transition">Workshops</a>
+                <a href="#gallery" class="hover:text-purple-600 transition">Gallery</a>
+                <a href="#corporate" class="hover:text-purple-600 transition">Corporate</a>
+                <a href="#other-events" class="hover:text-purple-600 transition">Other Events</a>
+                <a href="#team" class="hover:text-purple-600 transition">Our Team</a>
+                <a href="#contact" class="hover:text-purple-600 transition">Contact</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://instagram.com/viansh.co.in" target="_blank" class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-500 via-pink-500 to-purple-500 flex items-center justify-center text-white shadow-xs" title="Instagram">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="tel:+918186854511" class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs shadow-xs" title="Call Us">👤</a>
+                <a href="https://wa.me/918186854511" target="_blank" class="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center text-white shadow-xs" title="WhatsApp">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-gray-100 absolute top-full left-0 w-full z-50 shadow-lg">
+            <div class="px-6 py-4 space-y-3 flex flex-col text-xs font-bold uppercase tracking-wider">
+                <a href="#home" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Home</a>
+                <a href="#about-founder" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">About & Founder</a>
+                <a href="#workshops" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Workshops</a>
+                <a href="#gallery" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Gallery</a>
+                <a href="#corporate" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Corporate</a>
+                <a href="#other-events" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Other Events</a>
+                <a href="#team" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Our Team</a>
+                <a href="#contact" class="text-gray-600 hover:text-purple-600 py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative splash-hero min-h-[550px] md:min-h-[650px] pt-16 pb-20 px-6 flex items-center overflow-hidden mb-2">
+        <div class="absolute inset-0 bg-white/30 md:bg-transparent z-0"></div>
+
+        <div class="max-w-7xl w-full mx-auto grid md:grid-cols-12 items-center relative z-10">
+            <div class="md:col-span-6 lg:col-span-5 text-center md:text-left space-y-4">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-purple-950 font-serif tracking-tight leading-tight">
+                    Create Your <br>
+                    <span class="font-script text-pink-500 text-5xl sm:text-6xl md:text-7xl block my-2 transform -rotate-1 normal-case font-medium">Artistic World</span> 
+                </h1>
+                
+              <div class="text-[10px] md:text-[11px] font-bold tracking-[0.3em] text-dark navy-400 uppercase flex items-center justify-center md:justify-start gap-2 py-1 opacity-90">
+                    EXPLORE <span class="text-blue-500">•</span> LEARN <span class="text-browngit-500">•</span> CREATE
+                </div>
+                
+                <p class="text-xs md:text-sm text-black max-w-sm mx-auto md:mx-0 leading-relaxed font-medium">
+                    Join our creative art workshops and turn your imagination into beautiful art pieces.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start pt-2">
+                    <a href="#workshops" class="bg-purple-600 hover:bg-purple-700 text-white text-center text-xs font-bold uppercase tracking-widest px-7 py-3.5 rounded-full shadow-lg shadow-purple-200 transition transform hover:-translate-y-0.5">
+                        Join Workshop ➔
+                    </a>
+                    <a href="#gallery" class="bg-white hover:bg-gray-50 text-gray-700 text-center text-xs font-bold uppercase tracking-widest px-7 py-3.5 rounded-full shadow-md border border-gray-100 transition transform hover:-translate-y-0.5">
+                        View Gallery 📁
+                    </a>
+                </div>
+            </div>
+            <div class="hidden md:block md:col-span-6 lg:col-span-7"></div>
+        </div>
+    </section>
+
+    <!-- Exact Layout Matches image_12.png with Logo & Founder Images Linked -->
+    <section id="about-founder" class="py-16 max-w-7xl mx-auto px-6 mb-2 scroll-mt-20">
+        <div class="grid md:grid-cols-2 gap-12 items-start">
+            
+            <!-- Column 1: About Viansh -->
+            <div class="space-y-4 text-left">
+                <div class="flex items-center gap-3">
+                    <!-- Standard responsive image frame for Viansh Logo -->
+                    <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0 shadow-xs">
+                        <img src="images/viansh-logo.png" alt="Viansh Logo" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h2 class="text-lg md:text-xl font-bold text-[#2d2d2d] font-serif tracking-tight">About Viansh</h2>
+                        <div class="text-[8px] font-extrabold tracking-widest text-pink-600 uppercase mt-0.5 flex items-center gap-0.5">
+                            <span class="text-xs scale-75">📍</span> HYDERABAD
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-xs md:text-sm text-gray-500 leading-relaxed font-normal pt-1">
+                    Viansh Art Workshop is a sanctuary for raw creativity, designed to break the monotony of daily routines. We believe that art isn't just for trained professionals—it's a form of therapy, self-expression, and joy accessible to everyone. From vibrant fluid chemistry to tactile clay, our space provides the ultimate canvas for you to explore, experiment, and build wonderful artistic memories.
+                </p>
+                <div class="pt-2">
+                    <a href="#workshops" class="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest hover:text-purple-900 transition-colors inline-flex items-center gap-1">
+                        EXPLORE OUR WORLD ➔
+                    </a>
+                </div>
+            </div>
+
+            <!-- Column 2: Meet the Founder -->
+            <div class="space-y-4 text-left">
+                <div class="flex items-center gap-3">
+                    <!-- Standard responsive image frame for Founder Photo -->
+                    <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0 shadow-xs">
+                        <img src="images/founder-photo.jpg" alt="Founder" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-[#2d2d2d] font-serif tracking-tight">Meet the Founder</h3>
+                        <div class="text-[8px] font-extrabold tracking-widest text-pink-600 uppercase mt-0.5 flex items-center gap-0.5">
+                            <span class="text-xs scale-75">📍</span> HYDERABAD
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-xs md:text-sm text-gray-500 leading-relaxed font-normal pt-1">
+                    Driven by a deep passion for hands-on fine arts, our founder envisioned Viansh as a vibrant community hub where creative instruction meets complete relaxation. By balancing structural step-by-step techniques with personal choices, they curated these special workshops to ensure every visitor walks away with a stunning masterpiece and a renewed sense of inspiration.
+                </p>
+                <div class="pt-2">
+                    <a href="https://wa.me/918186854511" target="_blank" class="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest hover:text-purple-900 transition-colors inline-flex items-center gap-1">
+                        CREATE WITH US ➔
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Workshops Section -->
+    <section id="workshops" class="py-16 max-w-7xl mx-auto px-6 relative mb-2">
+        <div class="text-center mb-12">
+            <span class="font-script text-3xl text-purple-950 block capitalize">Our Creative</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-widest uppercase mt-1">Workshops</h2>
+            <div class="w-12 h-0.5 bg-pink-500 mx-auto mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-purple-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/resin-art.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🌊</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Resin Art</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Create ocean trays, coasters & more with resin magic.</p>
+                </div>
+                <button onclick="openWorkshopModal('resin')" class="text-[10px] font-bold text-pink-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-pink-600 outline-none">Learn More ➔</button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-blue-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/mermaid-brush.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🖌️</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Mermaid Brush</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Learn fluid art with acrylic pouring & mermaid techniques.</p>
+                </div>
+                <button onclick="openWorkshopModal('mermaid')" class="text-[10px] font-bold text-blue-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-blue-600 outline-none">Learn More ➔</button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-yellow-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/glass-painting.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-yellow-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🏺</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Glass Painting</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Decorate bottles, jars, glass plates & more with vibrant colors.</p>
+                </div>
+                <button onclick="openWorkshopModal('glass')" class="text-[10px] font-bold text-yellow-600 uppercase tracking-wider mt-4 block mx-auto group-hover:text-yellow-700 outline-none">Learn More ➔</button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-orange-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/pot-making.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🖐️</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Pot Making</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Clay art & pottery - get your hands dirty and create masterpieces.</p>
+                </div>
+                <button onclick="openWorkshopModal('pot')" class="text-[10px] font-bold text-orange-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-orange-600 outline-none">Learn More ➔</button>
+            </div>
+
+            <!-- Hidden Extra Cards -->
+            <div class="extra-workshop bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex-col justify-between group hover:shadow-xl hover:border-purple-100 transition-all duration-300" style="display: none;">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/canvas-painting.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-purple-50 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🖼️</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Canvas Painting</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Acrylic painting, texture art, abstracts & beautiful creations.</p>
+                </div>
+                <button onclick="openWorkshopModal('canvas')" class="text-[10px] font-bold text-purple-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-purple-600 outline-none">Learn More ➔</button>
+            </div>
+
+            <div class="extra-workshop bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex-col justify-between group hover:shadow-xl hover:border-indigo-100 transition-all duration-300" style="display: none;">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/lippen-art.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">💠</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Lippen Art</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Traditional mud and mirror work to create stunning wall decor.</p>
+                </div>
+                <button onclick="openWorkshopModal('lippen')" class="text-[10px] font-bold text-indigo-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-indigo-600 outline-none">Learn More ➔</button>
+            </div>
+
+            <div class="extra-workshop bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex-col justify-between group hover:shadow-xl hover:border-red-100 transition-all duration-300" style="display: none;">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/candle-making.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🕯️</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Candle Making</h3>
+                    <p class="text-[10px] text-gray-400 mt-2.5 leading-relaxed">Craft beautiful, scented candles with unique designs and shapes.</p>
+                </div>
+                <button onclick="openWorkshopModal('candle')" class="text-[10px] font-bold text-red-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-red-600 outline-none">Learn More ➔</button>
+            </div>
+
+            <div class="extra-workshop bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex-col justify-between group hover:shadow-xl hover:border-teal-100 transition-all duration-300" style="display: none;">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center" style="background-image: url('images/preserve-memories.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-teal-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🖼️</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Preserve Memories</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Turn your special moments into preserved, timeless art pieces.</p>
+                </div>
+                <button onclick="openWorkshopModal('memories')" class="text-[10px] font-bold text-teal-500 uppercase tracking-wider mt-4 block mx-auto group-hover:text-teal-600 outline-none">Learn More ➔</button>
+            </div>
+        </div>
+
+        <div class="text-center mt-10">
+            <button id="showMoreBtn" onclick="toggleWorkshops()" class="bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] font-bold uppercase tracking-widest px-8 py-3.5 rounded-full transition outline-none border border-purple-200">
+                View More Workshops ⬇️
+            </button>
+        </div>
+    </section>
+    <section id="diy-stalls" class="py-16 max-w-7xl mx-auto px-6 relative mb-2">
+        <div class="text-center mb-12">
+            <span class="font-script text-3xl text-purple-950 block capitalize">Interactive Stations</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-widest uppercase mt-1">DIY Stalls</h2>
+            <div class="w-12 h-0.5 bg-pink-500 mx-auto mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-pink-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center bg-gray-50 flex items-center justify-center text-gray-300 font-mono text-xs" style="background-image: url('images/magnets.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-pink-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🧲</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Custom Fridge Magnets</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Design your own magnetic art with customized photos, text, or shapes.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-blue-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center bg-gray-50 flex items-center justify-center text-gray-300 font-mono text-xs" style="background-image: url('images/keychains.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🔑</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Custom Keychains</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Create a customized accessory layout featuring your name or symbols.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-yellow-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center bg-gray-50 flex items-center justify-center text-gray-300 font-mono text-xs" style="background-image: url('images/badges.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-yellow-500 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">📛</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Custom Badges</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Design wearable pin-back badges that showcase your unique personality.</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-6 flex flex-col items-center justify-center min-h-[220px]">
+                <div class="text-xl opacity-40 mb-2">✨</div>
+                <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-6 flex flex-col items-center justify-center min-h-[220px]">
+                <div class="text-xl opacity-40 mb-2">✨</div>
+                <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-6 flex flex-col items-center justify-center min-h-[220px]">
+                <div class="text-xl opacity-40 mb-2">✨</div>
+                <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+        </div>
+
+        <div class="text-center mt-10">
+            <a href="#" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg shadow-purple-100 transition transform hover:-translate-y-0.5">
+                Place DIY Order via Google Form ➔
+            </a>
+        </div>
+    </section>
+
+    <section id="gifting" class="py-16 max-w-7xl mx-auto px-6 relative mb-2">
+        <div class="text-center mb-12">
+            <span class="font-script text-3xl text-purple-950 block capitalize">Pre-made Presents</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-widest uppercase mt-1">Gifting Section</h2>
+            <div class="w-12 h-0.5 bg-pink-500 mx-auto mt-3"></div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden text-center p-3 flex flex-col justify-between group hover:shadow-xl hover:border-purple-100 transition-all duration-300">
+                <div>
+                    <div class="h-28 w-full rounded-xl overflow-hidden bg-cover bg-center bg-gray-50 flex items-center justify-center text-gray-300 font-mono text-xs" style="background-image: url('images/hampers.png');"></div>
+                    <div class="w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs mx-auto -mt-4 border-2 border-white relative z-10 shadow-sm">🎁</div>
+                    <h3 class="font-bold text-gray-800 text-xs mt-3">Curated Hampers</h3>
+                    <p class="text-[10px] text-gray-400 mt-2 leading-relaxed">Beautifully packaged luxury gift baskets filled with thoughtful art selections.</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-4 flex flex-col items-center justify-center min-h-[200px]">
+                <div class="text-lg opacity-30 mb-1">🎁</div>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-4 flex flex-col items-center justify-center min-h-[200px]">
+                <div class="text-lg opacity-30 mb-1">🎁</div>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-4 flex flex-col items-center justify-center min-h-[200px]">
+                <div class="text-lg opacity-30 mb-1">🎁</div>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+
+            <div class="bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden text-center p-4 flex flex-col items-center justify-center min-h-[200px]">
+                <div class="text-lg opacity-30 mb-1">🎁</div>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Slot Available</span>
+            </div>
+        </div>
+        <div class="text-center mt-10">
+            <a href="#" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg shadow-purple-100 transition transform hover:-translate-y-0.5">
+                Place Gifting Order via Google Form ➔
+            </a>
+        </div>
+    </section>
+
+    <!-- Pop-up Modal -->
+    <div id="workshopModal" class="fixed inset-0 z-50 invisible opacity-0 flex items-center justify-center p-4 transition-all duration-300">
+        <div onclick="closeWorkshopModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
+        <div class="bg-white rounded-3xl overflow-hidden max-w-lg w-full shadow-2xl relative z-10 transform scale-95 transition-all duration-300 max-h-[90vh] flex flex-col">
+            <button onclick="closeWorkshopModal()" class="absolute top-4 right-4 bg-white/80 hover:bg-white text-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg shadow-md z-20 transition">×</button>
+            
+            <div id="modalImage" class="h-48 w-full bg-cover bg-center flex-shrink-0"></div>
+            
+            <div class="p-6 overflow-y-auto space-y-4">
+                <div class="flex items-center gap-3">
+                    <span id="modalIcon" class="text-2xl"></span>
+                    <h3 id="modalTitle" class="text-xl font-bold font-serif text-slate-900 tracking-tight">Workshop Details</h3>
+                </div>
+                <div class="w-12 h-0.5 bg-purple-600"></div>
+                <p id="modalDescription" class="text-xs text-gray-600 leading-relaxed font-medium"></p>
+                
+                <div class="pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
+                    <div>
+                        <p class="text-[9px] uppercase font-bold tracking-wider text-gray-400">Duration & Inclusions</p>
+                        <p class="text-[11px] text-slate-700 font-bold mt-0.5">All materials provided at the venue!</p>
+                    </div>
+                    <a href="https://wa.me/918186854511" target="_blank" class="bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5 flex-shrink-0">
+                        Book via WhatsApp ➔
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 splash-gallery border-y border-gray-100/60 mb-2">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 items-center">
+            <div class="space-y-3 text-center md:text-left">
+                <span class="font-script text-3xl text-purple-950 block capitalize">Our</span>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-widest uppercase mt-1">Gallery</h2>
+                <p class="text-xs text-gray-600 leading-relaxed font-semibold">Every art piece has a story. Explore workshop masterpieces and snippets of our creative spaces updated live via Instagram.</p>
+                <a href="https://instagram.com/viansh.co.in" target="_blank" class="inline-block bg-pink-500 hover:bg-pink-600 text-white text-center text-[10px] font-bold uppercase tracking-widest px-5 py-3 rounded-lg shadow-md shadow-pink-100 transition">
+                    Follow Our Instagram
+                </a>
+            </div>
+            <div class="md:col-span-3">
+                <div data-behold-id="ruGUz"></div>
+                <script src="https://w.behold.so/widget.js" type="module"></script>
+            </div>
+        </div>
+    </section>
+
+    <!-- Corporate Events Section -->
+    <section id="corporate" class="py-16 max-w-7xl mx-auto px-6 mb-2">
+        <div class="bg-gradient-to-br from-purple-900 to-indigo-900 rounded-3xl overflow-hidden shadow-xl flex flex-col md:flex-row items-stretch border border-purple-800">
+            <div class="md:w-1/2 p-10 md:p-14 text-white flex flex-col justify-center space-y-5 relative overflow-hidden">
+                <div class="absolute -top-10 -left-10 text-9xl opacity-5">🤝</div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-bold font-serif tracking-tight leading-tight">Corporate Events & Team Building</h2>
+                    <div class="w-12 h-0.5 bg-pink-500 mt-4"></div>
+                </div>
+                <p class="text-xs md:text-sm text-purple-100 leading-relaxed font-medium relative z-10">
+                    Transform your next team outing into a creative masterpiece. Our corporate art workshops are designed to relieve workplace stress, spark innovation, and bring your team closer together in a fun, relaxing environment.
+                </p>
+                <div class="pt-2 relative z-10">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdBcFdjQW0uu0HHhM339UFt25zTvzXrRtoDKQIth364aZAUjA/viewform" target="_blank" class="inline-block bg-white text-purple-900 hover:bg-gray-100 text-[11px] font-bold uppercase tracking-widest px-8 py-3.5 rounded-full transition transform hover:-translate-y-0.5 shadow-lg shadow-purple-900/50">
+                        Plan Your Event ➔
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 h-72 md:h-auto min-h-[350px] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80');"></div>
+        </div>
+    </section>
+
+    <!-- Other Private Events Section -->
+    <section id="other-events" class="py-16 splash-other-events border-y border-gray-100/60 mb-2">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold font-serif text-slate-900 tracking-tight">Private Events & Celebrations</h2>
+                <div class="w-12 h-0.5 bg-pink-500 mx-auto mt-3"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white/95 backdrop-blur-xs border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-md hover:border-pink-100 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl">🎂</div>
+                        <h3 class="text-base font-bold text-slate-900">Birthday Celebrations</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed font-medium">Make your next birthday unforgettable! Gather your friends and family for a custom private painting or crafts session. Perfect for all ages, with zero prior art experience needed.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-white/95 backdrop-blur-xs border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-md hover:border-purple-100 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">💍</div>
+                        <h3 class="text-base font-bold text-slate-900">Bridal Showers & Kitty Parties</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed font-medium">Host a classy, relaxing bridal party or a lively social gathering. Create beautiful matching aesthetic souvenirs, sip refreshments, and share an inspired therapeutic afternoon together.</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-white/95 backdrop-blur-xs border border-gray-100 rounded-3xl p-6 shadow-sm flex flex-col justify-between group hover:shadow-md hover:border-blue-100 transition duration-300">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-xl">✨</div>
+                        <h3 class="text-base font-bold text-slate-900">Private Social Mixers</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed font-medium">Looking to host a unique community mixer, family gathering, or festival party? Handpick any of our medium offerings—from clay modeling to fluid canvas pours—and let us design it for you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfjIa8dscmUJWijhHYNU_eH0ET2PG50anH_Epvqk3V2H1nf-A/viewform" target="_blank" class="inline-block bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg shadow-purple-100 transition transform hover:-translate-y-0.5">
+                    Plan A Private Event ➔
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-16 max-w-7xl mx-auto px-6 mb-2 scroll-mt-20">
+        <div class="bg-gradient-to-br from-purple-50/50 to-pink-50/50 border border-purple-100/60 rounded-3xl p-8 md:p-12 shadow-xs">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                
+                <!-- Team Description -->
+                <div class="md:col-span-5 space-y-4 text-center md:text-left">
+                    <span class="font-script text-3xl text-purple-950 block capitalize">The Creative Powerhouse</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-widest uppercase mt-1">Our Dedicated Team</h2>
+                    <div class="w-12 h-0.5 bg-pink-500 mx-auto md:mx-0 mt-2"></div>
+                    <p class="text-xs text-gray-600 leading-relaxed font-medium">
+                        Our full collective consists of highly skilled fine arts educators, active workshop facilitators, and design specialists who breathe life into every creative medium we offer. By balancing step-by-step masterclass instruction with total free-flowing creative expression, our team ensures that every attendee walks away with a stellar masterpiece.
+                    </p>
+                </div>
+                
+                <!-- Single Unified Group Image Holder -->
+                <div class="md:col-span-7 w-full">
+                    <div class="w-full h-64 sm:h-72 md:h-80 rounded-2xl overflow-hidden bg-gray-100 bg-cover bg-center border border-purple-100 shadow-sm relative group" style="background-image: url('images/team-group.jpg');">
+                        <div class="absolute inset-0 bg-purple-900/5 flex items-center justify-center text-purple-400 text-xs font-bold font-mono tracking-wider group-hover:bg-purple-900/0 transition">
+                            [ images/team-group.jpg ]
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-choose" class="py-16 splash-why-choose border-b border-gray-100/40 mb-2">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 items-center">
+            <div class="bg-gradient-to-br from-orange-400 via-orange-500 to-yellow-500 rounded-3xl p-8 text-white flex flex-col justify-between h-60 shadow-xl shadow-orange-100 relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-15 text-9xl translate-x-4 translate-y-4">🎨</div>
+                <div>
+                    <span class="font-script text-3xl text-white block capitalize">Why Choose</span>
+                    <h2 class="text-2xl font-extrabold tracking-widest uppercase mt-1">Viansh?</h2>
+                </div>
+                <p class="text-xs text-orange-50/90 leading-relaxed font-medium">A structured learning environment crafted to ignite passion, learn proper techniques, and build long-lasting artistic confidence.</p>
+            </div>
+
+            <div class="md:col-span-2 grid sm:grid-cols-2 gap-4">
+                <div class="flex items-center space-x-4 p-5 bg-white/90 backdrop-blur-xs rounded-2xl border border-gray-100 shadow-xs">
+                    <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl flex-shrink-0">🎓</div>
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">Expert Guidance</h4>
+                        <p class="text-[10px] text-gray-500 mt-1 font-medium">Learn from experienced artists with absolute passion.</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 p-5 bg-white/90 backdrop-blur-xs rounded-2xl border border-gray-100 shadow-xs">
+                    <div class="w-12 h-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xl flex-shrink-0">✨</div>
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">Quality Materials</h4>
+                        <p class="text-[10px] text-gray-500 mt-1 font-medium">We provide the absolute premium materials for perfect creations.</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 p-5 bg-white/90 backdrop-blur-xs rounded-2xl border border-gray-100 shadow-xs">
+                    <div class="w-12 h-12 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xl flex-shrink-0">💡</div>
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">Small Batch Sizes</h4>
+                        <p class="text-[10px] text-gray-500 mt-1 font-medium">Personalized attention and care for every single student.</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 p-5 bg-white/90 backdrop-blur-xs rounded-2xl border border-gray-100 shadow-xs">
+                    <div class="w-12 h-12 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center text-xl flex-shrink-0">❤️</div>
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">Friendly Environment</h4>
+                        <p class="text-[10px] text-gray-500 mt-1 font-medium">A happy, relaxing place to fully explore your deep creativity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 splash-testimonials border-t border-gray-100 mb-2">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold font-script text-center text-purple-950 mb-12">What Our Students Say</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-gray-100/80 text-center space-y-3 shadow-md">
+                    <div class="w-12 h-12 rounded-full mx-auto overflow-hidden bg-cover bg-center ring-4 ring-purple-100" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80');"></div>
+                    <div class="text-yellow-400 text-xs tracking-wider">★★★★★</div>
+                    <p class="text-xs text-gray-600 italic leading-relaxed font-medium">"Amazing experience! Learned resin art and made beautiful pieces, highly recommended!"</p>
+                    <h5 class="font-bold text-[10px] text-purple-600 uppercase tracking-widest">— Priya S.</h5>
+                </div>
+                <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-gray-100/80 text-center space-y-3 shadow-md">
+                    <div class="w-12 h-12 rounded-full mx-auto overflow-hidden bg-cover bg-center ring-4 ring-pink-100" style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80');"></div>
+                    <div class="text-yellow-400 text-xs tracking-wider">★★★★★</div>
+                    <p class="text-xs text-gray-600 italic leading-relaxed font-medium">"Mermaid brush workshop was awesome! Very patient and supportive teachers."</p>
+                    <h5 class="font-bold text-[10px] text-pink-600 uppercase tracking-widest">— Ananya R.</h5>
+                </div>
+                <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-gray-100/80 text-center space-y-3 shadow-md">
+                    <div class="w-12 h-12 rounded-full mx-auto overflow-hidden bg-cover bg-center ring-4 ring-cyan-100" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80');"></div>
+                    <div class="text-yellow-400 text-xs tracking-wider">★★★★★</div>
+                    <p class="text-xs text-gray-600 italic leading-relaxed font-medium">"I loved the pot making class. Perfect place for art lovers!"</p>
+                    <h5 class="font-bold text-[10px] text-cyan-600 uppercase tracking-widest">— Kavya M.</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Area -->
+    <footer id="contact" class="bg-[#0f1319] text-gray-400 pt-16 pb-8 px-6 text-xs relative scroll-mt-20">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 pb-12 border-b border-gray-800/60">
+            <div class="space-y-4">
+                <div class="text-white text-2xl font-bold font-serif tracking-wide">Viansh</div>
+                <div class="text-[9px] uppercase tracking-[0.2em] text-purple-400 font-bold -mt-3">ART WORKSHOP</div>
+                <p class="text-[11px] text-gray-400 leading-relaxed font-medium">A creative space where imagination meets art. Join our workshops and create something beautiful.</p>
+                <div class="flex space-x-3.5 text-base pt-2">
+                    <a href="https://instagram.com/viansh.co.in" target="_blank" class="text-gray-500 hover:text-white transition">📸</a>
+                    <a href="tel:+918186854511" class="text-gray-500 hover:text-white transition">👤</a>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <h4 class="text-white font-bold uppercase tracking-wider text-[10px]">Quick Links</h4>
+                <ul class="space-y-2 text-gray-400 font-medium">
+                    <li><a href="#home" class="hover:text-white transition">Home</a></li>
+                    <li><a href="#about-founder" class="hover:text-white transition">About & Founder</a></li>
+                    <li><a href="#workshops" class="hover:text-white transition">Workshops</a></li>
+                    <li><a href="#gallery" class="hover:text-white transition">Gallery</a></li>
+                    <li><a href="#corporate" class="hover:text-white transition">Corporate</a></li>
+                    <li><a href="#other-events" class="hover:text-white transition">Other Events</a></li>
+                    <li><a href="#team" class="hover:text-white transition">Our Team</a></li>
+                </ul>
+            </div>
+            <div class="space-y-3">
+                <h4 class="text-white font-bold uppercase tracking-wider text-[10px]">Contact Us</h4>
+                <div class="space-y-1.5 font-medium text-gray-400">
+                    <p>📞 +91 8186854511</p>
+                    <p>✉️ viansh.co.in@gmail.com</p>
+                    <p>📍 Hyderabad, Telangana, India</p>
+                </div>
+                <a href="https://wa.me/918186854511" target="_blank" class="inline-block text-center bg-green-600 hover:bg-green-700 text-white font-bold tracking-wide px-4 py-2 rounded-lg mt-2 transition shadow-md shadow-green-900/20">Chat on WhatsApp</a>
+            </div>
+        </div>
+        <div class="text-center text-[10px] text-gray-600 mt-8 font-medium tracking-wide">©️ 2026 VIANSH Art Workshop. All Rights Reserved.</div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/918186854511" target="_blank" class="fixed bottom-6 right-6 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white shadow-xl text-xl hover:bg-green-600 transition transform hover:scale-105 z-50">💬</a>
+
+    <!-- UI Script Logic -->
+    <script>
+        const workshopData = {
+            resin: {
+                title: "Resin Art Masterclass",
+                icon: "🌊",
+                image: "images/resin-art.png",
+                description: "Dive into the mesmerizing world of fluid chemistry! Learn precise epoxy ratios, high-grade pigments, and use heat tools to achieve natural ocean cell structures. Take home a custom resin tray and coasters."
+            },
+            mermaid: {
+                title: "Mermaid Brush Fluid Art",
+                icon: "🖌️",
+                image: "images/mermaid-brush.png",
+                description: "Unleash vibrant flows of color! Master advanced acrylic pouring methods, swipe techniques, and dirty pours to construct stunning, multi-layered patterns."
+            },
+            glass: {
+                title: "Vibrant Glass Painting",
+                icon: "🏺",
+                image: "images/glass-painting.png",
+                description: "Transform transparency into stunning, stained-glass inspired art using specialized liner cones and premium translucent glass paints."
+            },
+            pot: {
+                title: "Clay Art & Pot Making",
+                icon: "🖐️",
+                image: "images/pot-making.png",
+                description: "A hands-on, therapeutic experience working with raw clay sculpting elements. Learn fundamental pinch, coil, and slab pottery techniques."
+            },
+            canvas: {
+                title: "Canvas & Texture Painting",
+                icon: "🖼️",
+                image: "images/canvas-painting.png",
+                description: "Bring a physical dimension onto traditional flat surfaces. Manipulate heavy-body acrylic paint and modeling paste using professional palette knives."
+            },
+            lippen: {
+                title: "Lippen Art",
+                icon: "💠",
+                image: "images/lippen-art.png",
+                description: "Learn the traditional folk art of mud and mirror work. Create intricate geometric patterns and stunning reflective wall decor."
+            },
+            candle: {
+                title: "Candle Making",
+                icon: "🕯️",
+                image: "images/candle-making.png",
+                description: "Master the art of crafting aesthetic and aromatic candles. Explore different waxes, wicks, fragrance loads, and customized styling features."
+            },
+            memories: {
+                title: "Preserve Your Memories",
+                icon: "🖼️",
+                image: "images/preserve-memories.png",
+                description: "A special workshop layout dedicated to framing and preserving cherished artifacts, pressed flora, and timeless souvenirs perfectly via resin layers."
+            }
+        };
+
+        function toggleWorkshops() {
+            const extraCards = document.querySelectorAll('.extra-workshop');
+            const btn = document.getElementById('showMoreBtn');
+            let isShowing = extraCards[0].style.display !== 'none';
+
+            if (isShowing) {
+                extraCards.forEach(card => card.style.display = 'none');
+                btn.innerHTML = 'View More Workshops ⬇️';
+            } else {
+                extraCards.forEach(card => {
+                    card.style.display = 'flex';
+                    card.classList.add('flex-col');
+                });
+                btn.innerHTML = 'Show Less ⬆️';
+            }
+        }
+
+        function openWorkshopModal(key) {
+            const data = workshopData[key];
+            if (!data) return;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalIcon').innerText = data.icon;
+            document.getElementById('modalDescription').innerText = data.description;
+            document.getElementById('modalImage').style.backgroundImage = `url('${data.image}')`;
+
+            const modal = document.getElementById('workshopModal');
+            modal.classList.remove('invisible', 'opacity-0');
+            modal.firstElementChild.nextElementSibling.classList.remove('scale-95');
+            modal.firstElementChild.nextElementSibling.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWorkshopModal() {
+            const modal = document.getElementById('workshopModal');
+            modal.classList.add('invisible', 'opacity-0');
+            modal.firstElementChild.nextElementSibling.classList.remove('scale-100');
+            modal.firstElementChild.nextElementSibling.classList.add('scale-95');
+            document.body.style.overflow = '';
+        }
+    </script>
+    <script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Optional: Closes the menu automatically when a link is clicked
+  const menuLinks = mobileMenu.querySelectorAll('a');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+  });
+</script>
+</body>
+</html>
