@@ -81,15 +81,15 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
-        /* Dark immersive background matching the video */
-      /* Immersive Custom Background Image Layer - Completely Stationary */
-.hero-bg {
-    background-image: url('images/hero-banner.PNG'); /* <-- CHANGE THIS TO YOUR IMAGE FILE PATH */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* <-- LOCKS IMAGE IN PLACE ON DESKTOP */
-}
+      
+        /* Background applied only to the sticky container */
+        .hero-bg-sticky {
+            background-image:
+                              url('images/hero-banner.PNG'); /* <-- YOUR IMAGE HERE */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
 
         /* Smooth hardware-accelerated rendering for cards */
         .stack-card {
@@ -99,6 +99,7 @@
             will-change: transform, opacity;
             box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
         }
+  
 
     </style>
 </head>
@@ -126,7 +127,7 @@
             </div>
 
             <nav class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-wider text-gray-600">
-                <a href="#home" class="hover:text-purple-600 transition">Home</a>
+                <a href="#hero-track" class="hover:text-purple-600 transition">Home</a>
                 <a href="#about-founder" class="hover:text-purple-600 transition">About Us</a>
 		<a href="#Events" class="hover:text-purple-600 transition">Events</a>
                 <a href="#gallery" class="hover:text-purple-600 transition">Gallery</a>
@@ -152,7 +153,7 @@
 
         <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-b border-gray-100 absolute top-full left-0 w-full z-50 shadow-lg">
             <div class="px-6 py-4 space-y-3 flex flex-col text-xs font-bold uppercase tracking-wider">
-                <a href="#home" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Home</a>
+                <a href="#hero-track" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Home</a>
                 <a href="#about-founder" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">About & Founder</a>
                 <a href="#Events" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Events</a>
                 <a href="#gallery" class="text-gray-600 hover:text-purple-600 py-2 border-b border-gray-50">Gallery</a>
@@ -162,13 +163,12 @@
         </div>
             </div>
     </header>
-
-     <section id="home" class="relative w-full hero-bg h-[450vh]">
+<section id="hero-track" class="relative w-full h-[450vh]">
         
-        <div class="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
+        <div class="sticky top-0 w-full h-[100dvh] hero-bg-sticky overflow-hidden flex items-center justify-center">
             
             <div id="text-phase-1" class="absolute z-10 text-center text-black px-6 max-w-4xl pointer-events-none transition-opacity duration-100">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-serif tracking-tight leading-tight max-w-3xl mx-auto">
+                <h1 class="text-6xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-serif tracking-tight leading-tight max-w-3xl mx-auto">
                    Create your Artistic World 
                 </h1>
                 <div class="flex flex-col items-center opacity-60 mt-10 space-y-2">
@@ -177,11 +177,13 @@
                 </div>
             </div>
 
-            <div id="text-phase-2" class="absolute z-10 text-center text-deep-navy-blue px-6 w-full pointer-events-none opacity-0 scale-95 flex flex-col items-center justify-center">
+            <div id="text-phase-2" class="absolute z-30 text-center text-deep-navy-blue px-6 w-full pointer-events-none opacity-0 scale-95 flex flex-col items-center justify-center">
                 <p class="text-pink-500 font-bold tracking-[0.3em] uppercase text-xs md:text-sm mb-3">Welcome to</p>
                 <h2 class="text-5xl sm:text-7xl md:text-8xl font-black font-serif tracking-tight leading-none text-Deep-Navy-Blue">
-                    viansh arts<br><span class="text-neutral-400" text-deep-navy-blue>workshops.</span>
+                    viansh arts
                 </h2>
+               <h2 class="text-4xl sm:text-6xl md:text-7xl font-black font-serif tracking-tight leading-none text-Deep-Navy-Blue">
+               workshops</h2>
             </div>
             <div class="absolute inset-0 z-20 pointer-events-none w-full h-full">
                 <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=600&auto=format&fit=crop" class="stack-card w-44 h-60 md:w-64 md:h-88 object-cover rounded-2xl border-4 border-white opacity-0" alt="Art 1">
@@ -273,7 +275,7 @@
     <div class="max-w-7xl mx-auto w-full">
 
         <!-- The Interactive Bento Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 auto-rows-[280px]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 auto-rows-[280px]">
 
             <!-- 1. Workshops Block -->
             <!-- Change 'workshops.html' to the page you want to open in the same tab -->
@@ -389,7 +391,7 @@
       </a>
             </div>
             <div class="md:col-span-3">
-                <behold-widget feed-id="jujwvkPg873HJpsczskz"></behold-widget>
+<behold-widget feed-id="YdqfrYeTX14kF6OnCd6V"></behold-widget>
 <script>
   (() => {
     const d=document,s=d.createElement("script");s.type="module";
@@ -559,7 +561,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const track = document.getElementById('home');
+            const track = document.getElementById('hero-track');
             const cards = document.querySelectorAll('.stack-card');
             const text1 = document.getElementById('text-phase-1');
             const text2 = document.getElementById('text-phase-2');
