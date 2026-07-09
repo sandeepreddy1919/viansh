@@ -23,10 +23,20 @@
         }
     </script>
 </head>
-<body class="font-sans text-[#2d2d2d] antialiased bg-[#fffcfc]">
+<body class="font-sans text-[#2d2d2d] antialiased relative overflow-x-hidden">
+
+    <!-- ========================================== -->
+    <!-- DECORATIVE MODERN BACKGROUND               -->
+    <!-- ========================================== -->
+    <div class="fixed inset-0 z-[-1] h-full w-full bg-slate-50 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:20px_20px]">
+        <!-- Soft Purple Glow top right -->
+        <div class="absolute top-0 right-0 -z-10 w-[600px] h-[600px] bg-purple-200/50 rounded-full blur-[120px] opacity-60 mix-blend-multiply"></div>
+        <!-- Soft Pink Glow bottom left -->
+        <div class="absolute bottom-[-10%] left-[-10%] -z-10 w-[600px] h-[600px] bg-pink-200/50 rounded-full blur-[120px] opacity-60 mix-blend-multiply"></div>
+    </div>
 
     <!-- Simple Navigation -->
-    <nav class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100/50">
+    <nav class="w-full bg-white/70 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200/50">
         <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-purple-600 hover:text-black transition">
                 ← Back to Home
@@ -36,89 +46,145 @@
     </nav>
 
     <!-- Header -->
-    <header class="py-16 bg-purple-50 text-center px-4">
+    <header class="py-16 text-center px-4 relative z-10">
         <span class="font-script text-3xl text-purple-900 block capitalize mb-2">Discover Our</span>
         <h1 class="text-4xl md:text-5xl font-black font-serif text-slate-900 tracking-tight">Event Experiences</h1>
         <p class="text-sm text-gray-600 mt-4 max-w-xl mx-auto">Explore the diverse range of creative workshops, customized stalls, and private events we host to bring out the artist in everyone.</p>
     </header>
 
     <!-- Event Details Container -->
-    <main class="max-w-4xl mx-auto px-6 py-12 space-y-20">
+    <main class="max-w-4xl mx-auto px-6 py-8 space-y-12">
 
         <!-- 1. Arts Workshops -->
         <section id="arts" class="scroll-mt-24">
-            <div class="border-l-4 border-purple-500 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-purple-500 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">Arts Workshops</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Dive into the world of colors and textures with our signature Arts Workshops. Whether you are a beginner or a seasoned creator, our guided sessions cover everything from intricate resin pouring and fluid art to classic canvas painting and tactile clay pottery. We provide all the premium materials and step-by-step guidance you need to create your own masterpiece to take home.
-                </p>
-                <a href="https://forms.google.com" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-purple-700 transition">Register Now</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Dive into the world of colors and textures with our signature Arts Workshops. Whether you are a beginner or a seasoned creator, our guided sessions cover everything from intricate resin pouring and fluid art to classic canvas painting and tactile clay pottery. 
+                        <span id="arts-more" class="hidden">
+                            We provide all the premium materials and step-by-step guidance you need to create your own masterpiece to take home.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('arts-more', this)" class="text-[10px] font-bold text-purple-600 block mt-2 tracking-widest uppercase hover:text-purple-800 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://forms.google.com" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-purple-700 transition shadow-sm">Register Now</a>
             </div>
         </section>
 
         <!-- 2. Eatery Workshops -->
         <section id="eatery" class="scroll-mt-24">
-            <div class="border-l-4 border-pink-500 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-pink-500 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">Eatery Workshops</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Art isn't just for canvases—it belongs in the kitchen too! Our Eatery Workshops are designed for food enthusiasts who want to learn the art of culinary decoration. Join us to learn specialized baking techniques, aesthetic food styling, and how to craft edible art. Perfect for foodies looking to add a creative twist to their culinary skills in a fun, collaborative environment.
-                </p>
-                <a href="https://forms.google.com" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-pink-600 transition">Register Now</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Art isn't just for canvases—it belongs in the kitchen too! Our Eatery Workshops are designed for food enthusiasts who want to learn the art of culinary decoration. Join us to learn specialized baking techniques, aesthetic food styling, and how to craft edible art. 
+                        <span id="eatery-more" class="hidden">
+                            Perfect for foodies looking to add a creative twist to their culinary skills in a fun, collaborative environment.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('eatery-more', this)" class="text-[10px] font-bold text-pink-500 block mt-2 tracking-widest uppercase hover:text-pink-700 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://forms.google.com" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-pink-600 transition shadow-sm">Register Now</a>
             </div>
         </section>
 
         <!-- 3. DIY Stalls -->
         <section id="diy" class="scroll-mt-24">
-            <div class="border-l-4 border-yellow-400 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-yellow-400 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">DIY Stalls</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Elevate your next gathering with our interactive DIY Stalls. We bring the creativity directly to your venue! Guests can walk up and engage in mini-craft sessions, from making custom keychains and painting tote bags to quick resin art coasters. It’s the perfect experiential entertainment for flea markets, college fests, or any large-scale celebration where you want guests to leave with a personalized souvenir.
-                </p>
-                <a href="https://forms.google.com" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-yellow-500 hover:text-black transition">Book a Stall</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Elevate your next gathering with our interactive DIY Stalls. We bring the creativity directly to your venue! Guests can walk up and engage in mini-craft sessions, from making custom keychains and painting tote bags to quick resin art coasters. 
+                        <span id="diy-more" class="hidden">
+                            It’s the perfect experiential entertainment for flea markets, college fests, or any large-scale celebration where you want guests to leave with a personalized souvenir.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('diy-more', this)" class="text-[10px] font-bold text-yellow-600 block mt-2 tracking-widest uppercase hover:text-yellow-700 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://forms.google.com" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-yellow-500 hover:text-black transition shadow-sm">Book a Stall</a>
             </div>
         </section>
 
         <!-- 4. Private Events -->
         <section id="private" class="scroll-mt-24">
-            <div class="border-l-4 border-blue-500 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-blue-500 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">Private Events</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Celebrate your special moments with a splash of creativity. We host customized private art parties for birthdays, anniversaries, bridal showers, or simple weekend get-togethers with friends. You choose the art form, and we handle the rest—providing a cozy atmosphere, expert instructors, and a memorable bonding experience tailored exclusively for your group.
-                </p>
-                <a href="https://wa.me/918186854511" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-blue-600 transition">Contact Us</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Celebrate your special moments with a splash of creativity. We host customized private art parties for birthdays, anniversaries, bridal showers, or simple weekend get-togethers with friends. 
+                        <span id="private-more" class="hidden">
+                            You choose the art form, and we handle the rest—providing a cozy atmosphere, expert instructors, and a memorable bonding experience tailored exclusively for your group.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('private-more', this)" class="text-[10px] font-bold text-blue-500 block mt-2 tracking-widest uppercase hover:text-blue-700 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://wa.me/918186854511" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-blue-600 transition shadow-sm">Contact Us</a>
             </div>
         </section>
 
         <!-- 5. Corporate Events -->
         <section id="corporate" class="scroll-mt-24">
-            <div class="border-l-4 border-indigo-500 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-indigo-500 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">Corporate Events</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Break away from the screens and bring your team together through art. Our Corporate Engagement Programs are designed to foster team-building, relieve workplace stress, and spark innovative thinking. We offer on-site and off-site creative workshops that encourage collaboration and communication, ensuring your employees return to work refreshed and inspired.
-                </p>
-                <a href="https://wa.me/918186854511" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-indigo-600 transition">Plan a Team Event</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Break away from the screens and bring your team together through art. Our Corporate Engagement Programs are designed to foster team-building, relieve workplace stress, and spark innovative thinking. 
+                        <span id="corporate-more" class="hidden">
+                            We offer on-site and off-site creative workshops that encourage collaboration and communication, ensuring your employees return to work refreshed and inspired.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('corporate-more', this)" class="text-[10px] font-bold text-indigo-500 block mt-2 tracking-widest uppercase hover:text-indigo-700 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://wa.me/918186854511" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-indigo-600 transition shadow-sm">Plan a Team Event</a>
             </div>
         </section>
 
         <!-- 6. Gifting -->
         <section id="gifting" class="scroll-mt-24">
-            <div class="border-l-4 border-rose-400 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-rose-400 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">Gifting</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Looking for a gift that truly stands out? We create bespoke, handmade art pieces tailored to your exact preferences. From personalized resin clocks and nameplates to curated DIY art hampers, our gifting solutions are perfect for corporate giveaways, festive presents, or special surprises for your loved ones. Give the gift of creativity and craftsmanship.
-                </p>
-                <a href="https://wa.me/918186854511" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-rose-500 transition">Inquire Now</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Looking for a gift that truly stands out? We create bespoke, handmade art pieces tailored to your exact preferences. From personalized resin clocks and nameplates to curated DIY art hampers, 
+                        <span id="gifting-more" class="hidden">
+                            our gifting solutions are perfect for corporate giveaways, festive presents, or special surprises for your loved ones. Give the gift of creativity and craftsmanship.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('gifting-more', this)" class="text-[10px] font-bold text-rose-500 block mt-2 tracking-widest uppercase hover:text-rose-700 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://wa.me/918186854511" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-rose-500 transition shadow-sm">Inquire Now</a>
             </div>
         </section>
 
         <!-- 7. Other Events -->
         <section id="other" class="scroll-mt-24">
-            <div class="border-l-4 border-gray-400 pl-6">
+            <div class="bg-white/60 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-sm border border-white border-l-4 border-l-gray-400 hover:shadow-md transition-shadow">
                 <h2 class="text-3xl font-extrabold font-serif text-slate-900 mb-4">Other Events</h2>
-                <p class="text-gray-600 leading-relaxed mb-4">
-                    Got a unique idea? We love a good creative challenge! Whether it's a massive art installation for a festival, a school workshop program, or a pop-up collaborative mural, Viansh is equipped to bring diverse artistic visions to life. Reach out to us with your concept, and our team will work with you to design and execute a spectacular experiential event.
-                </p>
-                <a href="https://wa.me/918186854511" target="_blank" class="inline-block bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-gray-600 transition">Let's Discuss</a>
+                <div class="mb-4">
+                    <p class="text-gray-700 leading-relaxed inline">
+                        Got a unique idea? We love a good creative challenge! Whether it's a massive art installation for a festival, a school workshop program, or a pop-up collaborative mural, Viansh is equipped to bring diverse artistic visions to life. 
+                        <span id="other-more" class="hidden">
+                            Reach out to us with your concept, and our team will work with you to design and execute a spectacular experiential event.
+                        </span>
+                    </p>
+                    <button onclick="toggleReadMore('other-more', this)" class="text-[10px] font-bold text-gray-500 block mt-2 tracking-widest uppercase hover:text-gray-700 transition-colors">
+                        + Read More
+                    </button>
+                </div>
+                <a href="https://wa.me/918186854511" target="_blank" class="inline-block mt-3 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-gray-600 transition shadow-sm">Let's Discuss</a>
             </div>
         </section>
 
@@ -128,5 +194,24 @@
     <footer class="bg-[#0f1319] text-gray-400 py-8 text-center text-xs mt-12">
         <p>©️ 2026 VIANSH Art Workshop. All Rights Reserved.</p>
     </footer>
+
+    <!-- JavaScript for Read More functionality -->
+    <script>
+        function toggleReadMore(textId, button) {
+            var moreText = document.getElementById(textId);
+            
+            if (moreText.classList.contains("hidden")) {
+                // Show the text
+                moreText.classList.remove("hidden");
+                moreText.classList.add("inline");
+                button.innerHTML = "- Read Less";
+            } else {
+                // Hide the text
+                moreText.classList.remove("inline");
+                moreText.classList.add("hidden");
+                button.innerHTML = "+ Read More";
+            }
+        }
+    </script>
 </body>
 </html>
