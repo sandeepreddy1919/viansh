@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vainsh.netlify.app/sitemap.xml
