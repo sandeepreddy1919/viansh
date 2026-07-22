@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Events | Viansh Art Workshop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0;500;0;600;0;700;1;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-[#2d2d2d] bg-[#F8F9FA] min-h-screen">
+
+    <!-- Header -->
+    <header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-gray-100/50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex flex-col">
+                <span class="text-2xl font-bold tracking-wide text-purple-700 font-serif flex items-center gap-1">
+                    Viansh <span class="text-xs text-pink-500 font-sans">🎨</span>
+                </span>
+                <span class="text-[9px] uppercase tracking-[0.25em] text-gray-400 font-bold mt-0.5">Back to Home</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Dynamic Events Section -->
+    <section class="max-w-7xl mx-auto px-6 py-16">
+        <h1 class="text-4xl md:text-5xl font-black font-serif text-slate-900 mb-2">Upcoming Workshops</h1>
+        <p class="text-gray-500 mb-10 font-medium">Select a workshop to reserve your seat instantly.</p>
+
+        <!-- Container where Supabase will inject the cards -->
+        <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <p id="loading-text" class="text-gray-400 font-semibold animate-pulse">Loading live events...</p>
+        </div>
+    </section>
+
+    <!-- Glassmorphism Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50 transition-opacity">
+        <div class="bg-white/10 border border-white/20 backdrop-blur-xl p-8 rounded-3xl max-w-md w-full shadow-2xl relative">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-2xl transition">&times;</button>
+            
+            <h3 id="modal-workshop-title" class="text-2xl font-bold font-serif text-white mb-1">Book Workshop</h3>
+            <p class="text-pink-400 text-xs tracking-widest uppercase font-bold mb-6">Secure via Razorpay</p>
+
+            <form id="registration-form" onsubmit="initiatePayment(event)" class="space-y-4">
+                <div>
+                    <label class="block text-[10px] font-extrabold text-gray-300 uppercase tracking-widest mb-1.5">Full Name</label>
+                    <input type="text" id="cust-name" required class="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-extrabold text-gray-300 uppercase tracking-widest mb-1.5">Email Address</label>
+                    <input type="email" id="cust-email" required class="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-extrabold text-gray-300 uppercase tracking-widest mb-1.5">Mobile Number (UPI)</label>
+                    <input type="tel" id="cust-phone" required class="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-extrabold tracking-widest uppercase text-xs py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 mt-6">
+                    Pay ₹1 & Book Seat
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- The Logic Engine -->
+    <script src="EVENTRJS.JS"></script>  
+    </body>
+</html>
+  
