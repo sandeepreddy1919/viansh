@@ -17,25 +17,27 @@ async function fetchEvents() {
 
         if (error) {
             console.error('Error fetching events:', error);
-            loadingText.innerText = "Failed to load events.";
-            loadingText.style.display = 'block';
+            if (loadingText) {
+                loadingText.innerText = "Failed to load events.";
+                loadingText.style.display = 'block';
+            }
             return;
         }
 
-        loadingText.style.display = 'none';
+        if (loadingText) loadingText.style.display = 'none';
 
         if (!events || events.length === 0) {
-            loadingText.style.display = 'block';
-            loadingText.innerText = "No upcoming workshops found.";
+            if (loadingText) {
+                loadingText.style.display = 'block';
+                loadingText.innerText = "No upcoming workshops found.";
+            }
             return;
         }
 
-        // Using a variable to build HTML prevents rendering lag
         let htmlContent = "";
 
         events.forEach(event => {
-            // This prevents quotes in the title from breaking your javascript
-            const safeTitle = event.title.replace(/"/g, '&quot;');
+            const safeTitle = event.title ? event.title.replace(/"/g, '&quot;') : '';
             
             htmlContent += `
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group">
@@ -66,7 +68,7 @@ async function fetchEvents() {
             `;
         });
         
-        container.innerHTML = htmlContent;
+        if (container) container.innerHTML = htmlContent;
     } catch (err) {
         console.error("Error rendering events:", err);
     }
@@ -75,22 +77,30 @@ async function fetchEvents() {
 // 3. Modal Controls
 function openBookingModal(title) {
     selectedWorkshopTitle = title;
-    document.getElementById('modal-workshop-title').innerText = title;
-    document.getElementById('booking-modal').classList.remove('hidden');
+    const modalTitle = document.getElementById('modal-workshop-title');
+    const bookingModal = document.getElementById('booking-modal');
+    if (modalTitle) modalTitle.innerText = title;
+    if (bookingModal) bookingModal.classList.remove('hidden');
 }
 
 function closeModal() {
-    document.getElementById('booking-modal').classList.add('hidden');
-    document.getElementById('registration-form').reset();
+    const bookingModal = document.getElementById('booking-modal');
+    const registrationForm = document.getElementById('registration-form');
+    if (bookingModal) bookingModal.classList.add('hidden');
+    if (registrationForm) registrationForm.reset();
 }
 
 // 4. Combined Razorpay Payment & Database Insert
 function initiatePayment(e) {
     e.preventDefault();
 
-    const name = document.getElementById('cust-name').value;
-    const email = document.getElementById('cust-email').value;
-    const phone = document.getElementById('cust-phone').value;
+    const nameInput = document.getElementById('cust-name');
+    const emailInput = document.getElementById('cust-email');
+    const phoneInput = document.getElementById('cust-phone');
+
+    const name = nameInput ? nameInput.value : '';
+    const email = emailInput ? emailInput.value : '';
+    const phone = phoneInput ? phoneInput.value : '';
 
     const options = {
         "key": "rzp_live_TGEvaJciOnGGP3", 
@@ -102,7 +112,6 @@ function initiatePayment(e) {
         "theme": { "color": "#db2777" },
         "handler": async function (response) {
             
-            // Step A: Save to database first
             const { error } = await supabaseClient
                 .from('registrations')
                 .insert([{
@@ -111,7 +120,7 @@ function initiatePayment(e) {
                     phone: phone,
                     workshop_title: selectedWorkshopTitle,
                     payment_id: response.razorpay_payment_id,
-                    amount: 500, // INR value for database
+                    amount: 500,
                     status: 'paid'
                 }]);
 
@@ -119,10 +128,7 @@ function initiatePayment(e) {
                 alert("Payment successful, but failed to save registration. Please contact support.");
                 console.error(error);
             } else {
-                // Step B: Close booking modal
                 closeModal();
-                
-                // Step C: Trigger ticket generation using the live form data
                 generateTicket(name, selectedWorkshopTitle, response.razorpay_payment_id);
             }
         }
@@ -140,42 +146,50 @@ function initiatePayment(e) {
 
 // --- 5. TICKET DISPLAY FUNCTION ---
 function generateTicket(name, eventTitle, paymentId) {
-    document.getElementById('ticket-name').innerText = name;
-    document.getElementById('ticket-event').innerText = eventTitle;
-    document.getElementById('ticket-id').innerText = paymentId;
+    const ticketName = document.getElementById('ticket-name');
+    const ticketEvent = document.getElementById('ticket-event');
+    const ticketId = document.getElementById('ticket-id');
+    const ticketModal = document.getElementById('ticket-modal');
 
-    document.getElementById('ticket-modal').classList.remove('hidden');
+    if (ticketName) ticketName.innerText = name;
+    if (ticketEvent) ticketEvent.innerText = eventTitle;
+    if (ticketId) ticketId.innerText = paymentId;
+    if (ticketModal) ticketModal.classList.remove('hidden');
 }
 
 // --- 6. CLOSE TICKET LOGIC ---
-// Added optional chaining (?) in case the button hasn't rendered yet
 document.getElementById('close-ticket-btn')?.addEventListener('click', () => {
-    document.getElementById('ticket-modal').classList.add('hidden');
+    document.getElementById('ticket-modal')?.classList.add('hidden');
 });
 
 // --- 7. DOWNLOAD IMAGE LOGIC ---
 function downloadTicketImage() {
     const ticketElement = document.getElementById('ticket-content');
-    
+    if (!ticketElement) return;
+
     const elementsToHide = ticketElement.querySelectorAll('.no-print');
     elementsToHide.forEach(el => el.style.display = 'none');
 
-    // Make sure html2canvas is loaded in your HTML head for this to work
-    html2canvas(ticketElement, {
-        scale: 3, 
-        backgroundColor: "#ffffff",
-        useCORS: true
-    }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'Viansh_Event_Ticket.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+    if (typeof html2canvas !== 'undefined') {
+        html2canvas(ticketElement, {
+            scale: 3, 
+            backgroundColor: "#ffffff",
+            useCORS: true
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'Viansh_Event_Ticket.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
 
+            elementsToHide.forEach(el => el.style.display = '');
+        }).catch(err => {
+            console.error("Error generating ticket image:", err);
+            elementsToHide.forEach(el => el.style.display = '');
+        });
+    } else {
+        console.error("html2canvas library is not loaded.");
         elementsToHide.forEach(el => el.style.display = '');
-    }).catch(err => {
-        console.error("Error generating ticket image:", err);
-        elementsToHide.forEach(el => el.style.display = '');
-    });
+    }
 }
 
 // Run fetch on load
