@@ -124,7 +124,8 @@ function initiatePayment(e) {
                     status: 'paid'
                 }]);
 
-            if (error) {
+            if (error) {   
+                
                 alert("Payment successful, but failed to save registration. Please contact support.");
                 console.error(error);
             } else {
