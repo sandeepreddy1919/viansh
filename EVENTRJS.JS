@@ -104,7 +104,7 @@ function initiatePayment(e) {
 
     const options = {
         "key": "rzp_live_TGEvaJciOnGGP3", 
-        "amount": 50000, // 50000 paise = 500 INR
+        "amount": 100, // 100 paise = 1 INR
         "currency": "INR",
         "name": "Viansh Art Workshop",
         "description": `Ticket for ${selectedWorkshopTitle}`,
@@ -120,7 +120,7 @@ function initiatePayment(e) {
                     phone: phone,
                     workshop_title: selectedWorkshopTitle,
                     payment_id: response.razorpay_payment_id,
-                    amount: 500,
+                    amount: 100,
                     status: 'paid'
                 }]);
 
