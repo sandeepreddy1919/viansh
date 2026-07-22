@@ -11,6 +11,8 @@
     <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <!-- Razorpay Checkout SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -28,6 +30,21 @@
             }
         }
     </script>
+    <style>
+    @media print {
+        body * { visibility: hidden; }
+        .print-only-ticket, .print-only-ticket * { visibility: visible; }
+        .print-only-ticket {
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+            width: 100%;
+            border: none; 
+            box-shadow: none;
+        }
+        .no-print { display: none !important; }
+    }
+</style>
 </head>
 <body class="font-sans text-[#2d2d2d] bg-[#F8F9FA] min-h-screen">
 
@@ -89,6 +106,52 @@
 
     <!-- The Logic Engine -->
     <script src="EVENTRJS.JS"></script>  
+    <!-- 3. Add the Ticket Modal right above </body> -->
+<div id="ticket-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div id="ticket-content" class="bg-white p-8 rounded-2xl w-full max-w-sm shadow-2xl relative border-t-8 border-purple-600 print-only-ticket">
+        
+        <!-- Close Button -->
+        <button id="close-ticket-btn" class="absolute top-3 right-4 text-gray-400 hover:text-red-500 text-xl font-bold no-print">✖</button>
+        
+        <!-- Ticket Header -->
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-serif font-black text-purple-900 tracking-wide">Viansh.</h2>
+            <p class="text-[10px] uppercase tracking-widest text-pink-500 font-bold mt-1">Registration Pass</p>
+        </div>
+        
+        <!-- Ticket Details -->
+        <div class="space-y-4 border-y-2 border-dashed border-gray-200 py-5 mb-6">
+            <div>
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Attendee Name</p>
+                <p id="ticket-name" class="font-bold text-gray-800 text-lg">---</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Workshop/Event</p>
+                <p id="ticket-event" class="font-bold text-gray-800 text-lg">---</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Payment ID</p>
+                <p id="ticket-id" class="font-mono text-sm text-gray-600 font-semibold bg-gray-50 px-2 py-1 rounded inline-block">---</p>
+            </div>
+            <div>
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Status</p>
+                <p class="text-sm font-bold text-green-500 flex items-center gap-1">
+                    <span>✅</span> Paid & Confirmed
+                </p>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex gap-3 no-print">
+            <button onclick="downloadTicketImage()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-pink-200 uppercase text-[10px] tracking-widest">
+                Save Image
+            </button>
+            <button onclick="window.print()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-purple-200 uppercase text-[10px] tracking-widest">
+                Print PDF
+            </button>
+        </div>
+    </div>
+</div>
     </body>
 </html>
   
