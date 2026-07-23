@@ -133,11 +133,11 @@ function initiatePayment(e) {
                 closeModal();
                 generateTicket(name, selectedWorkshopTitle, response.razorpay_payment_id);
             }
-        }
+        } 
     };
 
     const rzp = new Razorpay(options);
-    
+     
     rzp.on('payment.failed', function (response){
         console.error("Payment Failed:", response.error);
         alert("Payment Failed. Please try again.");
