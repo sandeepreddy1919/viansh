@@ -121,7 +121,8 @@ function initiatePayment(e) {
                     workshop_title: selectedWorkshopTitle,
                     payment_id: response.razorpay_payment_id,
                     amount: 100,
-                    status: 'paid'
+                    status: 'paid',
+                    location: 'Hyderabad (Venue TBA)'
                 }]);
 
             if (error) {   
