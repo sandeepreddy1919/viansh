@@ -325,7 +325,7 @@ function downloadTicketImage() {
             link.download = 'Viansh_Event_Ticket.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
-
+ 
             elementsToHide.forEach(el => el.style.display = '');
         }).catch(err => {
             console.error("Error generating ticket image:", err);
