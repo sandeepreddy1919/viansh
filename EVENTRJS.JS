@@ -185,7 +185,7 @@ function downloadTicketImage() {
         }).then(canvas => {
             const link = document.createElement('a');
             link.download = 'Viansh_Event_Ticket.png';
-            link.href = canvas.toDataURL('image/png');
+            link.href = canvas.toDataURL('image/vianshlogo.png');
             link.click();
 
             elementsToHide.forEach(el => el.style.display = '');
