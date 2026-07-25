@@ -1,6 +1,6 @@
 // 1. Initialize Supabase
-const supabaseUrl = 'https://nzlnilejmrsmvaambkip.supabase.co';
-const supabaseKey = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO'; 
+const supabaseUrl = 'https://pduejtjmpvlhsqblviff.supabase.co';
+const supabaseKey = 'sb_publishable_XEqvPJ-kQujXK0ONksCexA_r4NaUW99'; 
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 let selectedWorkshopTitle = "";
@@ -124,11 +124,11 @@ function initiatePayment(e) {
                     status: 'paid',
                     location: 'Hyderabad (Venue TBA)'
                 }]);
-
-            if (error) {   
-                
-                alert("Payment successful, but failed to save registration. Please contact support.");
-                console.error(error);
+if (error) {    
+    // This will print the exact database error directly into the alert box!
+    alert("DB Error: " + error.message + " | Code: " + error.code);
+    console.error(error);
+}
             } else {
                 closeModal();
                 generateTicket(name, selectedWorkshopTitle, response.razorpay_payment_id);
@@ -138,6 +138,7 @@ function initiatePayment(e) {
 
     const rzp = new Razorpay(options);
      
+    
     rzp.on('payment.failed', function (response){
         console.error("Payment Failed:", response.error);
         alert("Payment Failed. Please try again.");
