@@ -3,6 +3,7 @@ const supabaseUrlReg = 'https://pduejtjmpvlhsqblviff.supabase.co';
 const supabaseKeyReg = 'sb_publishable_XEqvPJ-kQujXK0ONksCexA_r4NaUW99'; 
 const supabaseClientReg = window.supabase.createClient(supabaseUrlReg, supabaseKeyReg);
 
+
 const supabaseUrlEv = 'https://nzlnilejmrsmvaambkip.supabase.co';
 const supabaseKeyEv = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO'; 
 const supabaseClientEv = window.supabase.createClient(supabaseUrlEv, supabaseKeyEv);
