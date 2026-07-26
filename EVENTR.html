@@ -119,77 +119,75 @@
     <!-- Ticket Modal -->
     <div id="ticket-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
         
-        <!-- Main Ticket Container with Background Image -->
-        <div id="ticket-content" class="bg-white bg-[url('images/ticketbg.png')] bg-cover bg-center p-8 rounded-2xl w-full max-w-sm shadow-2xl relative border-t-8 border-yellow-500 print-only-ticket overflow-hidden">
+        <!-- Main Ticket Container -->
+        <div id="ticket-content" class="bg-slate-900 bg-[url('watermarked_img_6920040858869505576.png')] bg-cover bg-center p-8 rounded-2xl w-full max-w-sm shadow-2xl relative border-t-8 border-yellow-500 print-only-ticket overflow-hidden text-white">
             
-            <!-- Light overlay to ensure text remains readable over the background image -->
-        
-    
+            <!-- Dark Overlay with reduced opacity (40%) to make the background soft and faded -->
+            <div class="absolute inset-0 bg-black/60 z-0 pointer-events-none"></div>
+
             <div class="relative z-10">
                 <!-- Close Button -->
-                <button id="close-ticket-btn" onclick="closeTicket()" class="absolute -top-3 -right-3 text-gray-400 hover:text-red-500 text-2xl font-bold no-print bg-white rounded-full w-8 h-8 flex items-center justify-center shadow">&times;</button>
+                <button id="close-ticket-btn" onclick="closeTicket()" class="absolute -top-3 -right-3 text-gray-400 hover:text-white text-2xl font-bold no-print bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center shadow">&times;</button>
                 
                 <!-- Ticket Header -->
-                <div class="text-center mb-6 border-b border-gray-300 pb-4"> 
-                    <h2 class="text-2xl font-serif font-black text-gray-900 tracking-widest uppercase">Viansh Events</h2>
+                <div class="text-center mb-6 border-b border-white/20 pb-4">
+                    <h2 class="text-2xl font-serif font-black text-yellow-400 tracking-widest uppercase">Viansh Events</h2>
                 </div>
-                 
-
+                
                 <!-- Ticket Details -->
                 <div class="space-y-4 mb-4">
                     <div>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Attendee Name</p>
-                        <p id="ticket-name" class="font-bold text-gray-900 text-lg">---</p>
+                        <p class="text-[10px] text-yellow-300 uppercase font-bold tracking-wider">Attendee Name</p>
+                        <p id="ticket-name" class="font-bold text-white text-lg">---</p>
                     </div>
                     
                     <div>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Workshop</p>
-                        <p id="ticket-event" class="font-bold text-gray-900 text-lg">---</p>
+                        <p class="text-[10px] text-yellow-300 uppercase font-bold tracking-wider">Workshop</p>
+                        <p id="ticket-event" class="font-bold text-white text-lg">---</p>
                     </div>
                     
                     <!-- Date & Time Row -->
                     <div class="flex justify-between items-center py-2">
                         <div class="w-1/2">
-                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Date:</p>
-                            <p id="ticket-date" class="font-bold text-gray-800 text-sm">---</p>
+                            <p class="text-[10px] text-yellow-300 uppercase font-bold tracking-wider">Date:</p>
+                            <p id="ticket-date" class="font-bold text-gray-200 text-sm">---</p>
                         </div>
                         <div class="w-1/2 text-right">
-                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Time:</p>
-                            <p id="ticket-time" class="font-bold text-gray-800 text-sm">---</p>
+                            <p class="text-[10px] text-yellow-300 uppercase font-bold tracking-wider">Time:</p>
+                            <p id="ticket-time" class="font-bold text-gray-200 text-sm">---</p>
                         </div>
                     </div>
 
                     <div>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">Payment ID</p>
-                        <p id="ticket-id" class="font-mono text-sm text-gray-800 font-semibold">---</p>
+                        <p class="text-[10px] text-yellow-300 uppercase font-bold tracking-wider">Payment ID</p>
+                        <p id="ticket-id" class="font-mono text-sm text-gray-200 font-semibold">---</p>
                     </div>
                     
                     <div class="pt-2">
-                        <p class="text-sm font-bold text-green-600 flex items-center gap-1 bg-white/50 inline-block px-2 py-1 rounded">
+                        <p class="text-sm font-bold text-green-400 flex items-center gap-1 bg-black/40 inline-block px-2.5 py-1 rounded-md border border-green-500/30">
                             <span>✅</span> Paid & Confirmed
                         </p>
                     </div>
                 </div>
 
                 <!-- QR Code & Footer -->
-                <div class="flex flex-col items-center justify-center mt-6 border-t border-gray-300 pt-6">
-                    <div id="ticket-qrcode" class="mb-3 p-2 bg-white border border-gray-200 rounded-lg shadow-sm"></div>
-                    <p class="text-xs font-bold text-gray-700 uppercase tracking-widest">Thank You</p>
+                <div class="flex flex-col items-center justify-center mt-6 border-t border-white/20 pt-6">
+                    <div id="ticket-qrcode" class="mb-3 p-3 bg-white rounded-xl shadow-lg"></div>
+                    <p class="text-xs font-bold text-yellow-400 uppercase tracking-widest">Thank You</p>
                 </div>
                 
                 <!-- Action Buttons -->
                 <div class="flex gap-3 no-print mt-6">
-                    <button onclick="downloadTicketImage()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-yellow-200 uppercase text-[10px] tracking-widest">
+                    <button onclick="downloadTicketImage()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-extrabold py-3 rounded-xl transition shadow-lg uppercase text-[10px] tracking-widest">
                         Save Image
                     </button>
-                    <button onclick="window.print()" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-3 rounded-xl transition shadow-lg shadow-gray-300 uppercase text-[10px] tracking-widest">
+                    <button onclick="window.print()" class="w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 rounded-xl transition shadow-lg uppercase text-[10px] tracking-widest border border-white/20">
                         Print PDF
                     </button>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Script engine -->
     <script src="EVENTRJS.JS"></script>  
 </body>
