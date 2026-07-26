@@ -13,31 +13,82 @@
     
     <!-- HTML5 QR Code Scanner Library -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <style>
+        /* Fix for Tailwind CSS hiding the scanner's default buttons */
+        #reader {
+            min-height: 300px; /* Prevents the box from squishing */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Style the hidden "Request Camera" button */
+        #reader button {
+            background-color: #eab308 !important; /* Yellow-500 */
+            color: #0f172a !important; /* Dark slate */
+            font-weight: 900 !important;
+            padding: 12px 24px !important;
+            border-radius: 0.75rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.1em !important;
+            margin: 15px auto !important;
+            display: block !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            cursor: pointer;
+        }
+
+        /* Style the camera dropdown selection */
+        #reader select {
+            padding: 10px !important;
+            border: 2px solid #e2e8f0 !important;
+            border-radius: 8px !important;
+            color: #0f172a !important;
+            font-weight: bold !important;
+            margin-bottom: 15px !important;
+            width: 90% !important;
+            max-width: 300px !important;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        /* Hide the annoying "Powered by" link */
+        #reader a {
+            display: none !important; 
+        }
+
+        /* Fix text color inside the box */
+        #reader span {
+            color: #475569 !important;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-6">
 
     <div class="text-center mb-8">
         <h1 class="text-3xl font-black tracking-widest text-yellow-500 uppercase mb-2">Door Scanner</h1>
-        <p class="text-gray-400 text-sm">Point camera at the ticket QR code</p>
+        <p class="text-gray-400 text-sm">Tap the yellow button below to start</p>
     </div>
 
     <!-- Camera Window -->
-    <div id="reader" class="w-full max-w-md bg-white rounded-2xl overflow-hidden mb-6 shadow-2xl border-4 border-slate-700"></div>
+    <div id="reader" class="w-full max-w-md bg-white rounded-2xl overflow-hidden mb-6 shadow-2xl border-4 border-slate-700 text-center p-4"></div>
 
     <!-- Results Display Box (Hidden by default) -->
-    <div id="result-box" class="w-full max-w-md p-8 rounded-2xl text-center hidden shadow-2xl transition-all duration-300">
-        <p id="result-icon" class="text-5xl mb-4"></p>
-        <p id="result-message" class="font-black text-2xl uppercase tracking-wider mb-2"></p>
-        <p id="attendee-name" class="text-xl font-medium mb-1"></p>
-        <p id="ticket-slot" class="text-sm opacity-80 mb-6"></p>
+    <div id="result-box" class="w-full max-w-md p-8 rounded-2xl text-center hidden shadow-2xl transition-all duration-300 border-2 border-white/20">
+        <p id="result-icon" class="text-6xl mb-4 drop-shadow-md"></p>
+        <p id="result-message" class="font-black text-2xl uppercase tracking-wider mb-2 drop-shadow-md"></p>
+        <p id="attendee-name" class="text-xl font-bold mb-1 drop-shadow-md"></p>
+        <p id="ticket-slot" class="text-sm font-medium opacity-90 mb-6 drop-shadow-md"></p>
         
-        <button onclick="resetScanner()" class="bg-black/30 hover:bg-black/50 text-white font-bold py-3 px-8 rounded-xl transition w-full uppercase tracking-widest text-sm">
+        <button onclick="resetScanner()" class="bg-black/40 hover:bg-black/60 text-white font-bold py-3 px-8 rounded-xl transition w-full uppercase tracking-widest text-sm border border-white/20">
             Scan Next Ticket
         </button>
     </div>
 
     <script>
-        // 1. Initialize Supabase (Using your Registrations Database Credentials)
+        // 1. Initialize Supabase (Using your Registrations Database)
         const supabaseUrl = 'https://pduejtjmpvlhsqblviff.supabase.co';
         const supabaseKey = 'sb_publishable_XEqvPJ-kQujXK0ONksCexA_r4NaUW99'; 
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -56,15 +107,15 @@
             { fps: 10, qrbox: { width: 250, height: 250 } }, 
             false
         );
- 
-        // 3. What happens when a QR is scanned
+
+        // 3. The Verification Logic
         async function onScanSuccess(decodedText, decodedResult) {
-            if (!isScanning) return; // Prevent multiple rapid scans
+            if (!isScanning) return; 
             isScanning = false;
             
             // Pause camera and show loading state
             html5QrcodeScanner.pause();
-            showResult("bg-blue-600", "⏳", "CHECKING DATABASE...", "", "");
+            showResult("bg-blue-600", "⏳", "CHECKING DATABASE...", "Please wait", "");
 
             try {
                 // Look up the ticket in the database using the Payment ID
@@ -107,15 +158,12 @@
         }
 
         function onScanFailure(error) {
-            // We ignore background scanning errors (happens when no QR is in frame)
+            // Ignored.
         }
 
-        // 4. UI Helper Functions
+        // 4. UI Display Function
         function showResult(bgColor, icon, message, name, slot) {
-            // Remove previous background colors
             resultBox.classList.remove('bg-blue-600', 'bg-red-600', 'bg-yellow-500', 'bg-green-600', 'hidden');
-            
-            // Apply new state
             resultBox.classList.add(bgColor);
             resultIcon.innerText = icon;
             resultMessage.innerText = message;
