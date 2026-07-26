@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Scanner | Viansh Admin</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- HTML5 QR Code Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-6">
+
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-black tracking-widest text-yellow-500 uppercase mb-2">Door Scanner</h1>
+        <p class="text-gray-400 text-sm">Point camera at the ticket QR code</p>
+    </div>
+
+    <!-- Camera Window -->
+    <div id="reader" class="w-full max-w-md bg-white rounded-2xl overflow-hidden mb-6 shadow-2xl border-4 border-slate-700"></div>
+
+    <!-- Results Display Box (Hidden by default) -->
+    <div id="result-box" class="w-full max-w-md p-8 rounded-2xl text-center hidden shadow-2xl transition-all duration-300">
+        <p id="result-icon" class="text-5xl mb-4"></p>
+        <p id="result-message" class="font-black text-2xl uppercase tracking-wider mb-2"></p>
+        <p id="attendee-name" class="text-xl font-medium mb-1"></p>
+        <p id="ticket-slot" class="text-sm opacity-80 mb-6"></p>
+        
+        <button onclick="resetScanner()" class="bg-black/30 hover:bg-black/50 text-white font-bold py-3 px-8 rounded-xl transition w-full uppercase tracking-widest text-sm">
+            Scan Next Ticket
+        </button>
+    </div>
+
+    <script>
+        // 1. Initialize Supabase (Using your Registrations Database Credentials)
+        const supabaseUrl = 'https://pduejtjmpvlhsqblviff.supabase.co';
+        const supabaseKey = 'sb_publishable_XEqvPJ-kQujXK0ONksCexA_r4NaUW99'; 
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const resultBox = document.getElementById('result-box');
+        const resultIcon = document.getElementById('result-icon');
+        const resultMessage = document.getElementById('result-message');
+        const attendeeName = document.getElementById('attendee-name');
+        const ticketSlot = document.getElementById('ticket-slot');
+        
+        let isScanning = true;
+
+        // 2. Initialize the Scanner
+        const html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", 
+            { fps: 10, qrbox: { width: 250, height: 250 } }, 
+            false
+        );
+
+        // 3. What happens when a QR is scanned
+        async function onScanSuccess(decodedText, decodedResult) {
+            if (!isScanning) return; // Prevent multiple rapid scans
+            isScanning = false;
+            
+            // Pause camera and show loading state
+            html5QrcodeScanner.pause();
+            showResult("bg-blue-600", "⏳", "CHECKING DATABASE...", "", "");
+
+            try {
+                // Look up the ticket in the database using the Payment ID
+                const { data: ticket, error } = await supabase
+                    .from('registrations')
+                    .select('*')
+                    .eq('payment_id', decodedText)
+                    .single();
+
+                // Scenario A: Ticket doesn't exist
+                if (error || !ticket) {
+                    showResult("bg-red-600", "❌", "INVALID TICKET", "No record found.", "");
+                    return;
+                }
+
+                // Scenario B: Ticket was already scanned previously
+                if (ticket.status === 'checked_in') {
+                    showResult("bg-yellow-500", "⚠️", "ALREADY USED", `Belongs to: ${ticket.full_name}`, `Time Slot: ${ticket.time_slot}`);
+                    return;
+                }
+
+                // Scenario C: Ticket is valid and unused
+                if (ticket.status === 'paid') {
+                    // Update database to mark this ticket as used
+                    const { error: updateError } = await supabase
+                        .from('registrations')
+                        .update({ status: 'checked_in' })
+                        .eq('id', ticket.id);
+
+                    if (updateError) {
+                        showResult("bg-red-600", "❌", "DATABASE ERROR", "Could not check in.", "");
+                    } else {
+                        showResult("bg-green-600", "✅", "ACCESS GRANTED", ticket.full_name, `Time Slot: ${ticket.time_slot}`);
+                    }
+                }
+
+            } catch (err) {
+                showResult("bg-red-600", "❌", "NETWORK ERROR", "Please check your connection.", "");
+            }
+        }
+
+        function onScanFailure(error) {
+            // We ignore background scanning errors (happens when no QR is in frame)
+        }
+
+        // 4. UI Helper Functions
+        function showResult(bgColor, icon, message, name, slot) {
+            // Remove previous background colors
+            resultBox.classList.remove('bg-blue-600', 'bg-red-600', 'bg-yellow-500', 'bg-green-600', 'hidden');
+            
+            // Apply new state
+            resultBox.classList.add(bgColor);
+            resultIcon.innerText = icon;
+            resultMessage.innerText = message;
+            attendeeName.innerText = name;
+            ticketSlot.innerText = slot;
+        }
+
+        function resetScanner() {
+            resultBox.classList.add('hidden');
+            isScanning = true;
+            html5QrcodeScanner.resume();
+        }
+
+        // 5. Start the Camera
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
+</body>
+</html>

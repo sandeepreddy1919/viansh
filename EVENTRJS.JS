@@ -50,11 +50,15 @@ async function fetchEvents() {
             const safeDate = event.date ? event.date.replace(/"/g, '&quot;') : '';
             const safeLocation = event.location ? event.location.replace(/"/g, '&quot;') : 'Hyderabad (Venue TBA)';
             
+            // UPDATED: Now uses 'event.time' to match your schema
+            const safeSlots = event.time ? JSON.stringify(event.time).replace(/"/g, '&quot;') : '[]';
+            
             htmlContent += `
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="overflow-hidden h-56">
-                            <img src="${event.image_url}" alt="${safeTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <!-- UPDATED: Now uses 'event.image' to match your schema -->
+                            <img src="${event.image}" alt="${safeTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-6">
                             <h3 class="text-2xl font-bold text-slate-900 mb-2 font-serif">${event.title}</h3>
@@ -72,7 +76,8 @@ async function fetchEvents() {
                             data-title="${safeTitle}" 
                             data-date="${safeDate}"
                             data-location="${safeLocation}"
-                            onclick="openBookingModal(this.dataset.title, this.dataset.date, this.dataset.location)" 
+                            data-slots="${safeSlots}"
+                            onclick="openBookingModal(this.dataset.title, this.dataset.date, this.dataset.location, this.dataset.slots)" 
                             class="w-full bg-slate-900 hover:bg-black text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition">
                             Book Now
                         </button>
@@ -87,8 +92,8 @@ async function fetchEvents() {
     }
 }
 
-// 3. Modal Controls
-function openBookingModal(title, date, location) {
+// 3. Modal Controls & Dynamic Time Slot Rendering
+function openBookingModal(title, date, location, rawTimeSlots) {
     selectedWorkshop = {
         title: title || "",
         date: date || "",
@@ -97,7 +102,29 @@ function openBookingModal(title, date, location) {
 
     const modalTitle = document.getElementById('modal-workshop-title');
     const bookingModal = document.getElementById('booking-modal');
+    const timeSelect = document.getElementById('cust-time');
+
     if (modalTitle) modalTitle.innerText = selectedWorkshop.title;
+    
+    // Parse and render the dynamic time slots
+    if (timeSelect) {
+        timeSelect.innerHTML = '<option value="" disabled selected class="text-gray-900">Select a time slot</option>';
+        let slots = [];
+        try {
+            slots = rawTimeSlots ? JSON.parse(rawTimeSlots) : [];
+        } catch(e) {
+            console.error("Error parsing time slots", e);
+        }
+
+        if (Array.isArray(slots) && slots.length > 0) {
+            slots.forEach(slot => {
+                timeSelect.innerHTML += `<option value="${slot}" class="text-gray-900">${slot}</option>`;
+            });
+        } else {
+            timeSelect.innerHTML += `<option value="Standard Slot" class="text-gray-900">Standard Slot</option>`;
+        }
+    }
+
     if (bookingModal) bookingModal.classList.remove('hidden');
 }
 
@@ -129,10 +156,10 @@ function initiatePayment(e) {
         "name": "Viansh Art Workshop",
         "description": `Ticket for ${selectedWorkshop.title}`,
         "prefill": { "name": name, "email": email, "contact": phone },
-        "theme": { "color": "#eab308" }, // Changed to Yellow matching ticket UI
+        "theme": { "color": "#eab308" },
         "handler": async function (response) {
             
-            // Save to database AND .select() to get the row data back (for qr_token)
+            // Insert data, including the time_slot chosen
             const { data, error } = await supabaseClientReg
                 .from('registrations')
                 .insert([{
@@ -141,14 +168,13 @@ function initiatePayment(e) {
                     phone: phone,
                     workshop_title: selectedWorkshop.title,
                     workshop_date: selectedWorkshop.date,
-                    // If you add time_slot to Supabase DB in the future, uncomment this line:
-                    // time_slot: selectedTime, 
+                    time_slot: selectedTime, 
                     payment_id: response.razorpay_payment_id,
                     amount: 100,
                     status: 'paid',
                     location: selectedWorkshop.location
                 }])
-                .select(); // <--- CRITICAL: This returns the inserted record
+                .select();
 
             if (error) {    
                 alert("DB Error: " + error.message + " | Code: " + error.code);
@@ -156,10 +182,8 @@ function initiatePayment(e) {
             } else {
                 closeModal();
                 
-                // Extract the generated qr_token, or fallback to payment_id if token doesn't exist
-                const qrDataToEncode = (data && data[0] && data[0].qr_token) 
-                    ? data[0].qr_token 
-                    : response.razorpay_payment_id;
+                // Using payment_id directly for the QR verification step
+                const qrDataToEncode = response.razorpay_payment_id;
 
                 generateTicket(
                     name, 
@@ -200,12 +224,12 @@ function generateTicket(name, eventTitle, date, time, paymentId, qrData) {
     if (ticketTime) ticketTime.innerText = time || "TBA";
     if (ticketId) ticketId.innerText = paymentId;
 
-    // Generate the QR Code dynamically based on database UUID or Payment ID
+    // Generate the QR Code with the encoded Payment ID
     if (qrContainer) {
-        qrContainer.innerHTML = ""; // Clear existing QR code if generated previously
+        qrContainer.innerHTML = "";
         new QRCode(qrContainer, {
             text: qrData,
-            width: 120, // slightly larger for easier scanning
+            width: 120, 
             height: 120,
             colorDark : "#000000",
             colorLight : "#ffffff",
