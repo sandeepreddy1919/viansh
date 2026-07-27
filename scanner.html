@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Scanner | Viansh Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scanner App | Viansh</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,62 +20,138 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
     <style>
-        /* 1. Fix the White-on-White Text Issue */
-        #reader, #reader * {
-            color: #0f172a !important; /* Forces all text inside the box to be dark slate */
+        /* Apply Custom Font Globally */
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 80%);
+            overscroll-behavior-y: none; /* Prevents pull-to-refresh on mobile */
         }
-        
-        /* 2. Style the "Request Camera" button so it's a visible yellow pill */
+
+        /* 1. Sleek Glassmorphism Container for the Scanner */
+        #reader {
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #f8fafc !important; /* Light text */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1.5rem !important;
+            min-height: 280px;
+        }
+
+        /* 2. Target text inside the reader to ensure it's visible */
+        #reader span {
+            color: #94a3b8 !important; /* Slate-400 */
+            font-weight: 400 !important;
+            font-size: 0.9rem !important;
+            margin-bottom: 10px !important;
+            display: block;
+        }
+
+        /* 3. Style the "Request Camera" button as a premium pill */
         #reader button {
-            background-color: #eab308 !important; 
-            color: #000 !important; 
-            font-weight: 900 !important;
-            padding: 12px 24px !important;
-            border-radius: 0.5rem !important;
+            background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%) !important;
+            color: #111827 !important; 
+            font-weight: 800 !important;
+            padding: 14px 28px !important;
+            border-radius: 9999px !important; /* Full rounded pill */
             text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            font-size: 0.85rem !important;
             margin: 15px auto !important;
             display: inline-block !important;
             cursor: pointer;
             border: none !important;
+            box-shadow: 0 10px 15px -3px rgba(234, 179, 8, 0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+        
+        #reader button:active {
+            transform: scale(0.95) !important;
         }
 
-        /* 3. Hide the annoying "Powered by" link */
+        /* 4. Style the Camera Dropdown Menu */
+        #reader select {
+            background-color: rgba(15, 23, 42, 0.8) !important;
+            color: #f8fafc !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 12px 16px !important;
+            border-radius: 12px !important;
+            font-family: 'Outfit', sans-serif !important;
+            font-weight: 600 !important;
+            width: 100% !important;
+            max-width: 300px !important;
+            margin: 0 auto 15px auto !important;
+            display: block;
+            outline: none !important;
+            appearance: none; /* Removes default OS styling */
+            text-align: center;
+        }
+        
+        #reader select option {
+            color: #000 !important; /* Options must be dark to be readable on mobile native menus */
+        }
+
+        /* 5. Hide the annoying "Powered by" link */
         #reader a {
             display: none !important; 
         }
         
-        /* 4. Keep the camera feed looking clean */
+        /* 6. Perfect the Video Feed */
         #reader video {
-            border-radius: 0.5rem !important;
+            border-radius: 16px !important;
             margin-top: 10px !important;
             width: 100% !important;
+            border: 2px solid rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4) !important;
+            object-fit: cover;
+        }
+
+        /* Scanning Line Animation overlaying the video */
+        .scan-line-container {
+            position: relative;
         }
     </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-6">
+<body class="text-white min-h-screen flex flex-col items-center justify-center p-6">
 
-    <div class="text-center mb-8">
-        <h1 class="text-3xl font-black tracking-widest text-yellow-500 uppercase mb-2">Door Scanner</h1>
-        <p class="text-gray-400 text-sm">Tap the yellow button below to start</p>
+    <!-- Status Header -->
+    <div class="absolute top-6 left-0 w-full flex justify-center items-center gap-2">
+        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+        <span class="text-xs text-slate-400 tracking-widest uppercase font-semibold">System Online</span>
     </div>
 
-    <!-- Camera Window: Added text-slate-900 and min-height so it doesn't collapse -->
-    <div id="reader" class="w-full max-w-md bg-white text-slate-900 rounded-2xl overflow-hidden mb-6 shadow-2xl border-4 border-slate-700 p-6 min-h-[250px]"></div>
+    <!-- Main Title -->
+    <div class="text-center mb-8 mt-10">
+        <h1 class="text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 uppercase mb-2 drop-shadow-sm">Scanner</h1>
+        <p class="text-slate-400 text-sm font-light">Align QR code within the frame</p>
+    </div>
+
+    <!-- Camera Window -->
+    <div id="reader" class="w-full max-w-md rounded-3xl overflow-hidden mb-6 text-center"></div>
 
     <!-- Results Display Box (Hidden by default) -->
-    <div id="result-box" class="w-full max-w-md p-8 rounded-2xl text-center hidden shadow-2xl transition-all duration-300 border-2 border-white/20">
-        <p id="result-icon" class="text-6xl mb-4 drop-shadow-md"></p>
-        <p id="result-message" class="font-black text-2xl uppercase tracking-wider mb-2 drop-shadow-md"></p>
-        <p id="attendee-name" class="text-xl font-bold mb-1 drop-shadow-md"></p>
-        <p id="ticket-slot" class="text-sm font-medium opacity-90 mb-6 drop-shadow-md"></p>
+    <div id="result-box" class="w-full max-w-md p-8 rounded-3xl text-center hidden shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all duration-300 backdrop-blur-xl border border-white/10 relative overflow-hidden">
         
-        <button onclick="resetScanner()" class="bg-black/40 hover:bg-black/60 text-white font-bold py-3 px-8 rounded-xl transition w-full uppercase tracking-widest text-sm border border-white/20">
-            Scan Next Ticket
-        </button>
+        <!-- Background Glow -->
+        <div class="absolute inset-0 opacity-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+
+        <div class="relative z-10">
+            <p id="result-icon" class="text-7xl mb-4 drop-shadow-lg filter"></p>
+            <p id="result-message" class="font-black text-2xl uppercase tracking-widest mb-1 drop-shadow-md"></p>
+            <p id="attendee-name" class="text-xl font-semibold mb-1 text-white/90 drop-shadow-md"></p>
+            <p id="ticket-slot" class="text-sm font-light opacity-80 mb-8 bg-black/20 inline-block px-4 py-1 rounded-full"></p>
+            
+            <button onclick="resetScanner()" class="bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-8 rounded-2xl transition w-full uppercase tracking-widest text-sm border border-white/20 backdrop-blur-md shadow-lg">
+                Scan Next Ticket
+            </button>
+        </div>
     </div>
 
     <script>
-        // Wrap everything in window.onload to ensure the library is fully loaded before it tries to render the camera
         window.onload = function() {
             // 1. Initialize Supabase
             const supabaseUrl = 'https://pduejtjmpvlhsqblviff.supabase.co';
@@ -88,7 +169,7 @@
             // 2. Initialize the Scanner
             const html5QrcodeScanner = new Html5QrcodeScanner(
                 "reader", 
-                { fps: 10, qrbox: { width: 250, height: 250 } }, 
+                { fps: 15, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 }, 
                 false
             );
 
@@ -98,7 +179,7 @@
                 isScanning = false;
                 
                 html5QrcodeScanner.pause();
-                showResult("bg-blue-600", "⏳", "CHECKING DATABASE...", "Please wait", "");
+                showResult("bg-blue-900/80", "⏳", "VERIFYING...", "Checking secure database", "");
 
                 try {
                     const { data: ticket, error } = await supabase
@@ -108,12 +189,12 @@
                         .single();
 
                     if (error || !ticket) {
-                        showResult("bg-red-600", "❌", "INVALID TICKET", "No record found.", "");
+                        showResult("bg-red-900/90", "❌", "INVALID", "Ticket not found in system", "");
                         return;
                     }
 
                     if (ticket.status === 'checked_in') {
-                        showResult("bg-yellow-500", "⚠️", "ALREADY USED", `Belongs to: ${ticket.full_name}`, `Time Slot: ${ticket.time_slot}`);
+                        showResult("bg-yellow-600/90", "⚠️", "ALREADY USED", `Name: ${ticket.full_name}`, `Slot: ${ticket.time_slot}`);
                         return;
                     }
 
@@ -124,29 +205,35 @@
                             .eq('id', ticket.id);
 
                         if (updateError) {
-                            showResult("bg-red-600", "❌", "DATABASE ERROR", "Could not check in.", "");
+                            showResult("bg-red-900/90", "❌", "ERROR", "Database sync failed", "");
                         } else {
-                            showResult("bg-green-600", "✅", "ACCESS GRANTED", ticket.full_name, `Time Slot: ${ticket.time_slot}`);
+                            // Success!
+                            showResult("bg-emerald-600/90", "✅", "APPROVED", ticket.full_name, `Slot: ${ticket.time_slot}`);
                         }
                     }
 
                 } catch (err) {
-                    showResult("bg-red-600", "❌", "NETWORK ERROR", "Please check your connection.", "");
+                    showResult("bg-red-900/90", "❌", "OFFLINE", "Check internet connection", "");
                 }
             }
 
             function onScanFailure(error) {
-                // Ignored
+                // Ignored - runs constantly when scanning empty space
             }
 
             // 4. UI Display Function
             window.showResult = function(bgColor, icon, message, name, slot) {
-                resultBox.classList.remove('bg-blue-600', 'bg-red-600', 'bg-yellow-500', 'bg-green-600', 'hidden');
-                resultBox.classList.add(bgColor);
+                resultBox.className = `w-full max-w-md p-8 rounded-3xl text-center shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all duration-300 backdrop-blur-xl border border-white/10 relative overflow-hidden ${bgColor}`;
                 resultIcon.innerText = icon;
                 resultMessage.innerText = message;
                 attendeeName.innerText = name;
-                ticketSlot.innerText = slot;
+                
+                if (slot) {
+                    ticketSlot.innerText = slot;
+                    ticketSlot.style.display = 'inline-block';
+                } else {
+                    ticketSlot.style.display = 'none';
+                }
             }
 
             window.resetScanner = function() {
