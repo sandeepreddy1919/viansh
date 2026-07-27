@@ -7,11 +7,12 @@ const supabaseUrlEv = 'https://nzlnilejmrsmvaambkip.supabase.co';
 const supabaseKeyEv = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO'; 
 const supabaseClientEv = window.supabase.createClient(supabaseUrlEv, supabaseKeyEv);
 
-// Object to store details of the currently selected workshop
+// Object to store details of the currently selected workshop, now including price
 let selectedWorkshop = {
     title: "",
     date: "",
-    location: ""
+    location: "",
+    price: 0 // <-- Added price tracking
 };
 
 // 2. Fetch Events dynamically from Supabase
@@ -49,21 +50,25 @@ async function fetchEvents() {
             const safeTitle = event.title ? event.title.replace(/"/g, '&quot;') : '';
             const safeDate = event.date ? event.date.replace(/"/g, '&quot;') : '';
             const safeLocation = event.location ? event.location.replace(/"/g, '&quot;') : 'Hyderabad (Venue TBA)';
-            
-            // UPDATED: Now uses 'event.time' to match your schema
             const safeSlots = event.time ? JSON.stringify(event.time).replace(/"/g, '&quot;') : '[]';
+            
+            // Extract price from database (defaults to 0 if empty)
+            const eventPrice = event.price ? parseInt(event.price) : 0;
             
             htmlContent += `
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="overflow-hidden h-56">
-                            <!-- UPDATED: Now uses 'event.image' to match your schema -->
                             <img src="${event.image}" alt="${safeTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-6">
-                            <h3 class="text-2xl font-bold text-slate-900 mb-2 font-serif">${event.title}</h3>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold text-slate-900 font-serif w-2/3">${event.title}</h3>
+                                <!-- Show dynamic price on the card -->
+                                <p class="text-xl font-black text-pink-600 bg-pink-50 px-3 py-1 rounded-lg">₹${eventPrice}</p>
+                            </div>
                             
-                            <div class="space-y-1.5 mb-4">
+                            <div class="space-y-1.5 mb-4 mt-2">
                                 <p class="text-xs font-bold text-purple-600 tracking-wide uppercase">📅 ${event.date}</p>
                                 <p class="text-xs font-bold text-pink-500 tracking-wide uppercase">📍 ${safeLocation}</p>
                             </div>
@@ -72,12 +77,14 @@ async function fetchEvents() {
                         </div>
                     </div>
                     <div class="p-6 pt-0 mt-auto">
+                        <!-- Passed dataset.price into the openBookingModal function -->
                         <button 
                             data-title="${safeTitle}" 
                             data-date="${safeDate}"
                             data-location="${safeLocation}"
                             data-slots="${safeSlots}"
-                            onclick="openBookingModal(this.dataset.title, this.dataset.date, this.dataset.location, this.dataset.slots)" 
+                            data-price="${eventPrice}"
+                            onclick="openBookingModal(this.dataset.title, this.dataset.date, this.dataset.location, this.dataset.slots, this.dataset.price)" 
                             class="w-full bg-slate-900 hover:bg-black text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition">
                             Book Now
                         </button>
@@ -93,18 +100,26 @@ async function fetchEvents() {
 }
 
 // 3. Modal Controls & Dynamic Time Slot Rendering
-function openBookingModal(title, date, location, rawTimeSlots) {
+// Now accepts 'price' as the 5th argument
+function openBookingModal(title, date, location, rawTimeSlots, price) {
     selectedWorkshop = {
         title: title || "",
         date: date || "",
-        location: location || "Hyderabad (Venue TBA)"
+        location: location || "Hyderabad (Venue TBA)",
+        price: parseInt(price) || 0 // Store dynamic price
     };
 
     const modalTitle = document.getElementById('modal-workshop-title');
     const bookingModal = document.getElementById('booking-modal');
     const timeSelect = document.getElementById('cust-time');
+    const paySubmitBtn = document.getElementById('pay-submit-btn'); // Target the new button ID
 
     if (modalTitle) modalTitle.innerText = selectedWorkshop.title;
+    
+    // Dynamically update the button text to show the database price
+    if (paySubmitBtn) {
+        paySubmitBtn.innerText = `Pay ₹${selectedWorkshop.price} & Book Seat`;
+    }
     
     // Parse and render the dynamic time slots
     if (timeSelect) {
@@ -151,7 +166,8 @@ function initiatePayment(e) {
 
     const options = {
         "key": "rzp_live_TGEvaJciOnGGP3", 
-        "amount": 100, // 100 paise = 1 INR
+        // Razorpay expects paise (multiply ₹ by 100)
+        "amount": selectedWorkshop.price * 100, 
         "currency": "INR",
         "name": "Viansh Art Workshop",
         "description": `Ticket for ${selectedWorkshop.title}`,
@@ -159,7 +175,7 @@ function initiatePayment(e) {
         "theme": { "color": "#eab308" },
         "handler": async function (response) {
             
-            // Insert data, including the time_slot chosen
+            // Insert dynamic amount into Supabase
             const { data, error } = await supabaseClientReg
                 .from('registrations')
                 .insert([{
@@ -170,7 +186,7 @@ function initiatePayment(e) {
                     workshop_date: selectedWorkshop.date,
                     time_slot: selectedTime, 
                     payment_id: response.razorpay_payment_id,
-                    amount: 100,
+                    amount: selectedWorkshop.price, // Records the actual dynamic price
                     status: 'paid',
                     location: selectedWorkshop.location
                 }])
@@ -182,7 +198,6 @@ function initiatePayment(e) {
             } else {
                 closeModal();
                 
-                // Using payment_id directly for the QR verification step
                 const qrDataToEncode = response.razorpay_payment_id;
 
                 generateTicket(
@@ -206,77 +221,3 @@ function initiatePayment(e) {
 
     rzp.open();
 }
-
-// 5. Ticket Display Function
-function generateTicket(name, eventTitle, date, time, paymentId, qrData) {
-    const ticketName = document.getElementById('ticket-name');
-    const ticketEvent = document.getElementById('ticket-event');
-    const ticketDate = document.getElementById('ticket-date');
-    const ticketTime = document.getElementById('ticket-time');
-    const ticketId = document.getElementById('ticket-id');
-    const ticketModal = document.getElementById('ticket-modal');
-    const qrContainer = document.getElementById('ticket-qrcode');
-
-    // Populate textual fields
-    if (ticketName) ticketName.innerText = name;
-    if (ticketEvent) ticketEvent.innerText = eventTitle;
-    if (ticketDate) ticketDate.innerText = date || "N/A";
-    if (ticketTime) ticketTime.innerText = time || "TBA";
-    if (ticketId) ticketId.innerText = paymentId;
-
-    // Generate the QR Code with the encoded Payment ID
-    if (qrContainer) {
-        qrContainer.innerHTML = "";
-        new QRCode(qrContainer, {
-            text: qrData,
-            width: 120, 
-            height: 120,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-    }
-
-    if (ticketModal) ticketModal.classList.remove('hidden');
-}
-
-// 6. Close Ticket Logic
-function closeTicket() {
-    const ticketModal = document.getElementById('ticket-modal');
-    if (ticketModal) {
-        ticketModal.classList.add('hidden');
-    }
-}
-
-// 7. Download Image Logic
-function downloadTicketImage() {
-    const ticketElement = document.getElementById('ticket-content');
-    if (!ticketElement) return;
-
-    const elementsToHide = ticketElement.querySelectorAll('.no-print');
-    elementsToHide.forEach(el => el.style.display = 'none');
-
-    if (typeof html2canvas !== 'undefined') {
-        html2canvas(ticketElement, {
-            scale: 3, 
-            backgroundColor: "#ffffff",
-            useCORS: true
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = 'Viansh_Event_Ticket.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-
-            elementsToHide.forEach(el => el.style.display = '');
-        }).catch(err => {
-            console.error("Error generating ticket image:", err);
-            elementsToHide.forEach(el => el.style.display = '');
-        });
-    } else {
-        console.error("html2canvas library is not loaded.");
-        elementsToHide.forEach(el => el.style.display = '');
-    }
-}
-
-// Run fetch on load
-fetchEvents();
