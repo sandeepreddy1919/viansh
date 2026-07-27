@@ -221,3 +221,5 @@ function initiatePayment(e) {
 
     rzp.open();
 }
+// Call the function to load the events
+fetchEvents();
