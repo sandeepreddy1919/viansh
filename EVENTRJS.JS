@@ -64,7 +64,7 @@ async function fetchEvents() {
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold text-slate-900 font-serif w-2/3">${event.title}</h3>
-                                <!-- Show dynamic price on the card -->
+                                <!-- Show dynamic price on the card -->   
                                 <p class="text-xl font-black text-pink-600 bg-pink-50 px-3 py-1 rounded-lg">₹${eventPrice}</p>
                             </div>
                             
