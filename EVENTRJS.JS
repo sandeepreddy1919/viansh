@@ -221,5 +221,78 @@ function initiatePayment(e) {
 
     rzp.open();
 }
+// Function to open modal and fetch data dynamically from Supabase
+async function openBookingModal(eventId) {
+    const modal = document.getElementById('booking-modal');
+    const titleEl = document.getElementById('modal-event-title');
+    const passesContainer = document.getElementById('modal-passes-container');
+
+    // 1. Fetch title and pass details from Supabase using eventId
+    const { data: event, error } = await supabase
+        .from('events')
+        .select('title, ticket_passes')
+        .eq('id', eventId)
+        .single();
+
+    if (error || !event) {
+        console.error("Error fetching event details:", error);
+        alert("Failed to load pricing information. Please try again.");
+        return;
+    }
+
+    // 2. Inject Title from Database
+    titleEl.textContent = event.title;
+
+    // 3. Render Pass Options Dynamically
+    let passesHTML = '';
+    
+    if (event.ticket_passes && event.ticket_passes.length > 0) {
+        event.ticket_passes.forEach((pass, index) => {
+            passesHTML += `
+                <label class="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:bg-purple-50">
+                    <div class="flex items-center gap-3">
+                        <input type="radio" name="pass_type" value="${pass.price}" data-pass-name="${pass.name}" ${index === 0 ? 'checked' : ''} class="w-5 h-5 text-purple-600">
+                        <span class="font-bold text-gray-800">${pass.name}</span>
+                    </div>
+                    <span class="font-bold text-purple-700">₹${pass.price.toLocaleString('en-IN')}</span>
+                </label>
+            `;
+        });
+    } else {
+        passesHTML = `<p class="text-red-500">No passes available for this event.</p>`;
+    }
+
+    passesContainer.innerHTML = passesHTML;
+
+    // 4. Reveal the Modal
+    modal.classList.remove('hidden');
+}
+
+// Close Modal Event Listener
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('booking-modal').classList.add('hidden');
+});
+
+// Checkout Submission Handler
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const selectedPass = document.querySelector('input[name="pass_type"]:checked');
+    if (!selectedPass) return;
+
+    const price = parseInt(selectedPass.value);
+    const passName = selectedPass.getAttribute('data-pass-name');
+    const eventTitle = document.getElementById('modal-event-title').textContent;
+
+    // Convert price to paise for Razorpay
+    const amountInPaise = price * 100;
+
+    // Close Modal
+    document.getElementById('booking-modal').classList.add('hidden');
+
+    // Proceed to payment gateway
+    console.log(`Booking "${passName}" for "${eventTitle}" at ₹${price}`);
+    // initializeRazorpay(amountInPaise, `${eventTitle} - ${passName}`);
+});
 // Call the function to load the events
 fetchEvents();
