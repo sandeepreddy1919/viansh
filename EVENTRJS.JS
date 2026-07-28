@@ -59,7 +59,7 @@ async function fetchEvents() {
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group">
                     <div>
                         <div class="overflow-hidden h-56">
-                            <img src="${event.image}" alt="${safeTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <img src="${event.image}" alt="${safeTitle}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-2">
