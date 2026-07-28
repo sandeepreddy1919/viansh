@@ -35,20 +35,20 @@
         }
     </script>
     <style>
-    @media print {
-        body * { visibility: hidden; }
-        .print-only-ticket, .print-only-ticket * { visibility: visible; }
-        .print-only-ticket {
-            position: absolute; 
-            left: 0; 
-            top: 0; 
-            width: 100%;
-            border: none; 
-            box-shadow: none;
+        @media print {
+            body * { visibility: hidden; }
+            .print-only-ticket, .print-only-ticket * { visibility: visible; }
+            .print-only-ticket {
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%;
+                border: none; 
+                box-shadow: none;
+            }
+            .no-print { display: none !important; }
         }
-        .no-print { display: none !important; }
-    }
-</style>
+    </style>
 </head>
 <body class="font-sans text-[#2d2d2d] bg-[#F8F9FA] min-h-screen">
 
@@ -105,38 +105,39 @@
                 <div>
                     <label class="block text-[10px] font-extrabold text-gray-300 uppercase tracking-widest mb-1.5">Preferred Time Slot</label>
                     <select id="cust-time" required class="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition">
-                        <!-- Options injected dynamically by EVENTRJS.JS -->
+                        <!-- Options injected dynamically by eventrjs.js -->
                     </select>
                 </div>
 
-                <!-- Added id="pay-submit-btn" -->
-<button type="submit" id="pay-submit-btn" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-extrabold tracking-widest uppercase text-xs py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 mt-6">
-    Pay & Book Seat
-</button>
+                <!-- Dynamic Pass Selection -->
+                <div>
+                    <label class="block text-[10px] font-extrabold text-gray-300 uppercase tracking-widest mb-1.5">Select Pass</label>
+                    <div id="modal-passes-container" class="space-y-3">
+                        <!-- Passes injected dynamically by eventrjs.js -->
+                    </div>
+                </div>
+
+                <button type="submit" id="pay-submit-btn" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-extrabold tracking-widest uppercase text-xs py-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 mt-6">
+                    Pay & Book Seat
+                </button>
             </form>
         </div>
     </div>
 
-   <!-- Ticket Modal -->
+    <!-- Ticket Modal -->
     <div id="ticket-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
         
-        <!-- Main Ticket Container -->
         <div id="ticket-content" class="bg-slate-900 bg-[url('images/ticketbg.png')] bg-cover bg-center p-8 rounded-2xl w-full max-w-sm shadow-2xl relative border-t-8 border-yellow-500 print-only-ticket overflow-hidden text-white">
             
-            <!-- OVERLAY: Controls how visible the background image is. 
-                 Change bg-black/50 to bg-black/30 for a brighter image, or bg-black/70 for a darker image. -->
             <div class="absolute inset-0 bg-black/50 z-0 pointer-events-none"></div>
 
             <div class="relative z-10">
-                <!-- Close Button -->
                 <button id="close-ticket-btn" onclick="closeTicket()" class="absolute -top-3 -right-3 text-gray-400 hover:text-white text-2xl font-bold no-print bg-slate-800 rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-white/10">&times;</button>
                 
-                <!-- Ticket Header -->
                 <div class="text-center mb-6 border-b border-white/20 pb-4">
                     <h2 class="text-2xl font-serif font-black text-yellow-400 tracking-widest uppercase drop-shadow-md">Viansh Events</h2>
                 </div>
                 
-                <!-- Ticket Details (Added drop-shadows for perfect contrast against the background) -->
                 <div class="space-y-4 mb-4 drop-shadow-md">
                     <div>
                         <p class="text-[10px] text-yellow-400 uppercase font-black tracking-wider">Attendee Name</p>
@@ -148,7 +149,6 @@
                         <p id="ticket-event" class="font-bold text-white text-lg tracking-wide">---</p>
                     </div>
                     
-                    <!-- Date & Time Row -->
                     <div class="flex justify-between items-center py-2">
                         <div class="w-1/2">
                             <p class="text-[10px] text-yellow-400 uppercase font-black tracking-wider">Date:</p>
@@ -172,13 +172,11 @@
                     </div>
                 </div>
 
-                <!-- QR Code & Footer -->
                 <div class="flex flex-col items-center justify-center mt-6 border-t border-white/20 pt-6">
                     <div id="ticket-qrcode" class="mb-3 p-3 bg-white rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.2)]"></div>
                     <p class="text-xs font-bold text-yellow-400 uppercase tracking-widest drop-shadow-md">Thank You</p>
                 </div>
                 
-                <!-- Action Buttons -->
                 <div class="flex gap-3 no-print mt-6">
                     <button onclick="downloadTicketImage()" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-black py-3 rounded-xl transition shadow-lg uppercase text-[10px] tracking-widest">
                         Save Image
@@ -190,7 +188,8 @@
             </div>
         </div>
     </div>  
-      <!-- Script engine -->
+
+    <!-- Script Engine -->
     <script src="EVENTRJS.JS"></script>  
 </body>
 </html>

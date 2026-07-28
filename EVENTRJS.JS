@@ -1,4 +1,4 @@
-// 1. Initialize Supabase
+// 1. Initialize Supabase Clients
 const supabaseUrlReg = 'https://pduejtjmpvlhsqblviff.supabase.co';
 const supabaseKeyReg = 'sb_publishable_XEqvPJ-kQujXK0ONksCexA_r4NaUW99'; 
 const supabaseClientReg = window.supabase.createClient(supabaseUrlReg, supabaseKeyReg);
@@ -7,15 +7,15 @@ const supabaseUrlEv = 'https://nzlnilejmrsmvaambkip.supabase.co';
 const supabaseKeyEv = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO'; 
 const supabaseClientEv = window.supabase.createClient(supabaseUrlEv, supabaseKeyEv);
 
-// Object to store details of the currently selected workshop, now including price
+// Selected Workshop State
 let selectedWorkshop = {
     title: "",
     date: "",
     location: "",
-    price: 0 // <-- Added price tracking
+    price: 0
 };
 
-// 2. Fetch Events dynamically from Supabase
+// 2. Fetch Events Dynamically from Supabase
 async function fetchEvents() {
     try {
         const { data: events, error } = await supabaseClientEv
@@ -28,7 +28,7 @@ async function fetchEvents() {
         if (error) {
             console.error('Error fetching events:', error);
             if (loadingText) {
-                loadingText.innerText = "Failed to load events.";
+                loadingText.innerText = "Failed to load events. Check database credentials.";
                 loadingText.style.display = 'block';
             }
             return;
@@ -51,8 +51,7 @@ async function fetchEvents() {
             const safeDate = event.date ? event.date.replace(/"/g, '&quot;') : '';
             const safeLocation = event.location ? event.location.replace(/"/g, '&quot;') : 'Hyderabad (Venue TBA)';
             const safeSlots = event.time ? JSON.stringify(event.time).replace(/"/g, '&quot;') : '[]';
-            
-            // Extract price from database (defaults to 0 if empty)
+            const safePasses = event.ticket_passes ? JSON.stringify(event.ticket_passes).replace(/"/g, '&quot;') : '[]';
             const eventPrice = event.price ? parseInt(event.price) : 0;
             
             htmlContent += `
@@ -64,7 +63,6 @@ async function fetchEvents() {
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="text-2xl font-bold text-slate-900 font-serif w-2/3">${event.title}</h3>
-                                <!-- Show dynamic price on the card -->
                                 <p class="text-xl font-black text-pink-600 bg-pink-50 px-3 py-1 rounded-lg">₹${eventPrice}</p>
                             </div>
                             
@@ -77,14 +75,14 @@ async function fetchEvents() {
                         </div>
                     </div>
                     <div class="p-6 pt-0 mt-auto">
-                        <!-- Passed dataset.price into the openBookingModal function -->
                         <button 
                             data-title="${safeTitle}" 
                             data-date="${safeDate}"
                             data-location="${safeLocation}"
                             data-slots="${safeSlots}"
                             data-price="${eventPrice}"
-                            onclick="openBookingModal(this.dataset.title, this.dataset.date, this.dataset.location, this.dataset.slots, this.dataset.price)" 
+                            data-passes="${safePasses}"
+                            onclick="openBookingModal(this.dataset.title, this.dataset.date, this.dataset.location, this.dataset.slots, this.dataset.price, this.dataset.passes)" 
                             class="w-full bg-slate-900 hover:bg-black text-white font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition">
                             Book Now
                         </button>
@@ -99,36 +97,70 @@ async function fetchEvents() {
     }
 }
 
-// 3. Modal Controls & Dynamic Time Slot Rendering
-// Now accepts 'price' as the 5th argument
-function openBookingModal(title, date, location, rawTimeSlots, price) {
+// 3. Dynamic UI Helpers & Modal Controls
+function updatePayButton(price) {
+    const paySubmitBtn = document.getElementById('pay-submit-btn');
+    if (paySubmitBtn) {
+        paySubmitBtn.innerText = `Pay ₹${price} & Book Seat`;
+    }
+}
+
+function openBookingModal(title, date, location, rawTimeSlots, price, rawPasses) {
     selectedWorkshop = {
         title: title || "",
         date: date || "",
         location: location || "Hyderabad (Venue TBA)",
-        price: parseInt(price) || 0 // Store dynamic price
+        price: parseInt(price) || 0
     };
 
     const modalTitle = document.getElementById('modal-workshop-title');
     const bookingModal = document.getElementById('booking-modal');
     const timeSelect = document.getElementById('cust-time');
-    const paySubmitBtn = document.getElementById('pay-submit-btn'); // Target the new button ID
+    const passesContainer = document.getElementById('modal-passes-container');
+    const paySubmitBtn = document.getElementById('pay-submit-btn');
 
     if (modalTitle) modalTitle.innerText = selectedWorkshop.title;
     
-    // Dynamically update the button text to show the database price
-    if (paySubmitBtn) {
-        paySubmitBtn.innerText = `Pay ₹${selectedWorkshop.price} & Book Seat`;
+    // Parse ticket passes array
+    let passes = [];
+    try {
+        passes = rawPasses ? JSON.parse(rawPasses) : [];
+    } catch(e) {
+        console.error("Error parsing passes JSON:", e);
     }
-    
-    // Parse and render the dynamic time slots
+
+    // Render Ticket Passes
+    if (passesContainer) {
+        if (passes.length > 0) {
+            let passesHTML = '';
+            passes.forEach((pass, index) => {
+                const isChecked = index === 0 ? 'checked' : '';
+                passesHTML += `
+                    <label class="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition">
+                        <div class="flex items-center gap-3">
+                            <input type="radio" name="pass_type" value="${pass.price}" data-pass-name="${pass.name}" ${isChecked} class="w-4 h-4 text-pink-500 bg-transparent border-white/20 focus:ring-pink-500 focus:ring-2" onchange="updatePayButton(${pass.price})">
+                            <span class="font-bold text-gray-200 text-sm">${pass.name}</span>
+                        </div>
+                        <span class="font-bold text-pink-400">₹${pass.price}</span>
+                    </label>
+                `;
+            });
+            passesContainer.innerHTML = passesHTML;
+            if (paySubmitBtn) paySubmitBtn.innerText = `Pay ₹${passes[0].price} & Book Seat`;
+        } else {
+            passesContainer.innerHTML = `<p class="text-gray-400 text-sm italic">Standard Pass - ₹${selectedWorkshop.price}</p>`;
+            if (paySubmitBtn) paySubmitBtn.innerText = `Pay ₹${selectedWorkshop.price} & Book Seat`;
+        }
+    }
+
+    // Render Time Slots
     if (timeSelect) {
         timeSelect.innerHTML = '<option value="" disabled selected class="text-gray-900">Select a time slot</option>';
         let slots = [];
         try {
             slots = rawTimeSlots ? JSON.parse(rawTimeSlots) : [];
         } catch(e) {
-            console.error("Error parsing time slots", e);
+            console.error("Error parsing time slots JSON:", e);
         }
 
         if (Array.isArray(slots) && slots.length > 0) {
@@ -150,7 +182,7 @@ function closeModal() {
     if (registrationForm) registrationForm.reset();
 }
 
-// 4. Combined Razorpay Payment & Database Insert
+// 4. Razorpay Payment & Database Insertion
 function initiatePayment(e) {
     e.preventDefault();
 
@@ -164,29 +196,31 @@ function initiatePayment(e) {
     const phone = phoneInput ? phoneInput.value : '';
     const selectedTime = timeInput ? timeInput.value : '';
 
+    const selectedPassEl = document.querySelector('input[name="pass_type"]:checked');
+    const finalPrice = selectedPassEl ? parseInt(selectedPassEl.value) : selectedWorkshop.price;
+    const passName = selectedPassEl ? selectedPassEl.getAttribute('data-pass-name') : 'Standard Pass';
+
     const options = {
         "key": "rzp_live_TGEvaJciOnGGP3", 
-        // Razorpay expects paise (multiply ₹ by 100)
-        "amount": selectedWorkshop.price * 100, 
+        "amount": finalPrice * 100, 
         "currency": "INR",
         "name": "Viansh Art Workshop",
-        "description": `Ticket for ${selectedWorkshop.title}`,
+        "description": `Ticket for ${selectedWorkshop.title} (${passName})`,
         "prefill": { "name": name, "email": email, "contact": phone },
         "theme": { "color": "#eab308" },
         "handler": async function (response) {
             
-            // Insert dynamic amount into Supabase
             const { data, error } = await supabaseClientReg
                 .from('registrations')
                 .insert([{
                     full_name: name,
                     email: email,
                     phone: phone,
-                    workshop_title: selectedWorkshop.title,
+                    workshop_title: `${selectedWorkshop.title} - ${passName}`,
                     workshop_date: selectedWorkshop.date,
                     time_slot: selectedTime, 
                     payment_id: response.razorpay_payment_id,
-                    amount: selectedWorkshop.price, // Records the actual dynamic price
+                    amount: finalPrice,
                     status: 'paid',
                     location: selectedWorkshop.location
                 }])
@@ -198,15 +232,13 @@ function initiatePayment(e) {
             } else {
                 closeModal();
                 
-                const qrDataToEncode = response.razorpay_payment_id;
-
                 generateTicket(
                     name, 
-                    selectedWorkshop.title, 
+                    `${selectedWorkshop.title} (${passName})`, 
                     selectedWorkshop.date, 
                     selectedTime, 
                     response.razorpay_payment_id,
-                    qrDataToEncode
+                    response.razorpay_payment_id
                 );
             }
         } 
@@ -221,78 +253,52 @@ function initiatePayment(e) {
 
     rzp.open();
 }
-// Function to open modal and fetch data dynamically from Supabase
-async function openBookingModal(eventId) {
-    const modal = document.getElementById('booking-modal');
-    const titleEl = document.getElementById('modal-event-title');
-    const passesContainer = document.getElementById('modal-passes-container');
 
-    // 1. Fetch title and pass details from Supabase using eventId
-    const { data: event, error } = await supabase
-        .from('events')
-        .select('title, ticket_passes')
-        .eq('id', eventId)
-        .single();
+// 5. Ticket Modal & QR Generator
+function generateTicket(name, title, date, time, paymentId, qrData) {
+    document.getElementById('ticket-name').innerText = name || '---';
+    document.getElementById('ticket-event').innerText = title || '---';
+    document.getElementById('ticket-date').innerText = date || '---';
+    document.getElementById('ticket-time').innerText = time || '---';
+    document.getElementById('ticket-id').innerText = paymentId || '---';
 
-    if (error || !event) {
-        console.error("Error fetching event details:", error);
-        alert("Failed to load pricing information. Please try again.");
-        return;
-    }
-
-    // 2. Inject Title from Database
-    titleEl.textContent = event.title;
-
-    // 3. Render Pass Options Dynamically
-    let passesHTML = '';
-    
-    if (event.ticket_passes && event.ticket_passes.length > 0) {
-        event.ticket_passes.forEach((pass, index) => {
-            passesHTML += `
-                <label class="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:bg-purple-50">
-                    <div class="flex items-center gap-3">
-                        <input type="radio" name="pass_type" value="${pass.price}" data-pass-name="${pass.name}" ${index === 0 ? 'checked' : ''} class="w-5 h-5 text-purple-600">
-                        <span class="font-bold text-gray-800">${pass.name}</span>
-                    </div>
-                    <span class="font-bold text-purple-700">₹${pass.price.toLocaleString('en-IN')}</span>
-                </label>
-            `;
+    const qrContainer = document.getElementById('ticket-qrcode');
+    if (qrContainer) {
+        qrContainer.innerHTML = '';
+        new QRCode(qrContainer, {
+            text: qrData || paymentId,
+            width: 110,
+            height: 110
         });
-    } else {
-        passesHTML = `<p class="text-red-500">No passes available for this event.</p>`;
     }
 
-    passesContainer.innerHTML = passesHTML;
-
-    // 4. Reveal the Modal
-    modal.classList.remove('hidden');
+    const ticketModal = document.getElementById('ticket-modal');
+    if (ticketModal) ticketModal.classList.remove('hidden');
 }
 
-// Close Modal Event Listener
-document.getElementById('close-modal').addEventListener('click', () => {
-    document.getElementById('booking-modal').classList.add('hidden');
-});
+function closeTicket() {
+    const ticketModal = document.getElementById('ticket-modal');
+    if (ticketModal) ticketModal.classList.add('hidden');
+}
 
-// Checkout Submission Handler
-document.getElementById('checkout-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+function downloadTicketImage() {
+    const ticketElement = document.getElementById('ticket-content');
+    if (!ticketElement) return;
 
-    const selectedPass = document.querySelector('input[name="pass_type"]:checked');
-    if (!selectedPass) return;
+    const noPrintElements = ticketElement.querySelectorAll('.no-print');
+    noPrintElements.forEach(el => el.style.display = 'none');
 
-    const price = parseInt(selectedPass.value);
-    const passName = selectedPass.getAttribute('data-pass-name');
-    const eventTitle = document.getElementById('modal-event-title').textContent;
+    html2canvas(ticketElement, { scale: 2, useCORS: true }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Viansh_Ticket_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        noPrintElements.forEach(el => el.style.display = '');
+    }).catch(err => {
+        console.error("Error generating ticket image:", err);
+        noPrintElements.forEach(el => el.style.display = '');
+    });
+}
 
-    // Convert price to paise for Razorpay
-    const amountInPaise = price * 100;
-
-    // Close Modal
-    document.getElementById('booking-modal').classList.add('hidden');
-
-    // Proceed to payment gateway
-    console.log(`Booking "${passName}" for "${eventTitle}" at ₹${price}`);
-    // initializeRazorpay(amountInPaise, `${eventTitle} - ${passName}`);
-});
-// Call the function to load the events
+// Initializer Call
 fetchEvents();
