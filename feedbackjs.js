@@ -29,7 +29,7 @@ window.toggleTextByChar = function(elementId, btnElement) {
     }
 }
 
-// Setup Carousel Navigation for Mobile (Dots & Swipe tracking)
+// Setup Carousel Navigation (Unified horizontal track for Mobile and Desktop)
 function setupCarousel(totalCards) {
     const container = document.getElementById('testimonials-container');
     const dotsContainer = document.getElementById('carousel-dots');
@@ -38,7 +38,7 @@ function setupCarousel(totalCards) {
 
     let currentIndex = 0;
 
-    // Generate dots for mobile view
+    // Generate dots
     dotsContainer.innerHTML = '';
     for (let i = 0; i < totalCards; i++) {
         const dot = document.createElement('button');
@@ -58,7 +58,6 @@ function setupCarousel(totalCards) {
     }
 
     const updateActiveDot = () => {
-        if (window.innerWidth >= 768) return; // Skip dot sync on desktop grid view
         const cards = container.children;
         if (cards.length === 0) return;
         const cardWidth = cards[0].offsetWidth;
@@ -74,16 +73,25 @@ function setupCarousel(totalCards) {
         }
     };
 
+    container.removeEventListener('scroll', updateActiveDot); // Prevent duplicate listeners
     container.addEventListener('scroll', updateActiveDot);
 }
 
-// Fetch data from Supabase and render Feedback (Limit set to 12 items)
+// Fetch data from Supabase and render Feedback
 async function loadTestimonials() {
     const container = document.getElementById('testimonials-container');
     if (!container) {
         console.warn("Testimonials container not found on this page.");
         return; 
     }
+
+    // Force container styles via JS to override any conflicting HTML grid layout classes
+    container.style.display = 'flex';
+    container.style.flexWrap = 'nowrap';
+    container.style.overflowX = 'auto';
+    container.style.gap = '24px';
+    container.style.scrollSnapType = 'x mandatory';
+    container.style.scrollbarWidth = 'none'; // Hide scrollbar for clean look
 
     try {
         const { data: feedbackData, error } = await supabaseClient
@@ -109,7 +117,7 @@ async function loadTestimonials() {
             const truncatedText = isLongText ? fullText.substring(0, 100) + '...' : fullText;
 
             return `
-                <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50 flex flex-col justify-between flex-shrink-0 w-full md:w-auto snap-center">
+                <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50 flex flex-col justify-between flex-shrink-0 w-[300px] sm:w-[350px] snap-center">
                     <div>
                         <div class="w-16 h-16 rounded-full mx-auto overflow-hidden bg-cover bg-center mb-2" style="background-image: url('${feedback.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}');"></div>
                         <div class="text-yellow-400 text-sm tracking-widest">${stars}</div>
