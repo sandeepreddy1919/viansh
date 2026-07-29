@@ -38,7 +38,7 @@ function setupCarousel(totalCards) {
 
     let currentIndex = 0;
 
-    // Generate dots
+    // Generate dots for mobile view
     dotsContainer.innerHTML = '';
     for (let i = 0; i < totalCards; i++) {
         const dot = document.createElement('button');
@@ -46,27 +46,22 @@ function setupCarousel(totalCards) {
         dot.setAttribute('aria-label', `Slide ${i + 1}`);
         dot.addEventListener('click', () => {
             currentIndex = i;
-            scrollToIndex(currentIndex);
+            const cards = container.children;
+            if (cards.length === 0) return;
+            const cardWidth = cards[0].offsetWidth;
+            const style = window.getComputedStyle(container);
+            const gap = parseInt(style.gap) || 24;
+            
+            container.scrollTo({ left: currentIndex * (cardWidth + gap), behavior: 'smooth' });
         });
         dotsContainer.appendChild(dot);
     }
 
-    const scrollToIndex = (index) => {
-        const cards = container.children;
-        if (cards.length === 0) return;
-        const card = cards[0];
-        const cardWidth = card.offsetWidth;
-        const style = window.getComputedStyle(container);
-        const gap = parseInt(style.gap) || 24;
-        
-        container.scrollTo({ left: index * (cardWidth + gap), behavior: 'smooth' });
-    };
-
     const updateActiveDot = () => {
+        if (window.innerWidth >= 768) return; // Skip dot sync on desktop grid view
         const cards = container.children;
         if (cards.length === 0) return;
-        const card = cards[0];
-        const cardWidth = card.offsetWidth;
+        const cardWidth = cards[0].offsetWidth;
         const style = window.getComputedStyle(container);
         const gap = parseInt(style.gap) || 24;
         
@@ -82,7 +77,7 @@ function setupCarousel(totalCards) {
     container.addEventListener('scroll', updateActiveDot);
 }
 
-// Fetch data from Supabase and render Feedback
+// Fetch data from Supabase and render Feedback (Limit set to 12 items)
 async function loadTestimonials() {
     const container = document.getElementById('testimonials-container');
     if (!container) {
@@ -95,7 +90,7 @@ async function loadTestimonials() {
             .from('feedback')
             .select('*')
             .order('created_at', { ascending: false })
-            .limit(5);
+            .limit(12);
 
         if (error) throw error;
 
