@@ -453,17 +453,31 @@
         </div>
     </section>
 
-    <!-- Dynamic Testimonials Section (Updated for side-by-side mobile scroll) -->
+    <!-- Dynamic Testimonials Section (Updated for single-card mobile carousel with arrows & dots) -->
     <section class="py-20 splash-testimonials border-y border-gray-100/40 mb-2 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-4xl mx-auto px-6">
             
-            <div class="text-center mb-12">
+            <div class="text-center mb-10">
                 <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-950 font-script">What Our Students Say</h2>
             </div>
             
-            <!-- Side-by-side flex scroll on mobile, 3-column grid on desktop -->
-            <div id="testimonials-container" class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scroll-smooth scrollbar-none">
-                <!-- Database cards will load here -->
+            <div class="relative">
+                <!-- Testimonials Cards Container -->
+                <div id="testimonials-container" class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none">
+                    <!-- Database cards will load here -->
+                </div>
+
+                <!-- Mobile Carousel Controls (Arrows and Dots) -->
+                <div class="flex items-center justify-between mt-6 md:hidden">
+                    <button id="prev-testimonial" class="w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center text-gray-800 justify-center font-bold text-lg focus:outline-none">‹</button>
+                    
+                    <!-- Pagination Dots Container -->
+                    <div id="carousel-dots" class="flex space-x-2 items-center">
+                        <!-- Dots populated dynamically -->
+                    </div>
+
+                    <button id="next-testimonial" class="w-10 h-10 rounded-full bg-white shadow-md border border-gray-100 flex items-center text-gray-800 justify-center font-bold text-lg focus:outline-none">›</button>
+                </div>
             </div>
             
         </div>
@@ -569,7 +583,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- feedback script -->
-    <script src="feedbackjs.js?v=2"></script>
+    <script src="feedbackjs.js?v=3"></script>
     <script src="indexjs.js" type="module"></script>
 </body>
 </html>
