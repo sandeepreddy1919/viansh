@@ -1,7 +1,6 @@
 // 1. Initialize Supabase
-const { createClient } = supabase; // Get the createClient function from the CDN script
+const { createClient } = supabase;
 
-// REPLACE THESE WITH YOUR ACTUAL SUPABASE URL AND ANON KEY
 const supabaseUrl = 'https://mwqxolqhixjgoqivmcor.supabase.co';
 const supabaseKey = 'sb_publishable_922Js1DXmj8ZbtfctVPckQ_xWW7rSRn';
 const supabaseClient = createClient(supabaseUrl, supabaseKey);
@@ -12,7 +11,6 @@ async function loadTestimonials() {
     if (!container) return; 
 
     // Fetch data from the 'testimonials' table
-    // We order by 'created_at' descending so the newest reviews show up first
     const { data: feedbackData, error } = await supabaseClient
         .from('testimonials')
         .select('*')
@@ -23,15 +21,15 @@ async function loadTestimonials() {
         return;
     }
 
-    // Generate HTML for each feedback item
+    // Generate HTML for each feedback item exactly like the screenshot
     const testimonialsHTML = feedbackData.map(feedback => {
         const stars = '★'.repeat(feedback.rating) + '☆'.repeat(5 - feedback.rating);
 
         return `
-            <div class="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-gray-100/80 text-center space-y-3 shadow-md">
-                <div class="w-12 h-12 rounded-full mx-auto overflow-hidden bg-cover bg-center ring-4 ${feedback.ringColor}" style="background-image: url('${feedback.image}');"></div>
-                <div class="text-yellow-400 text-xs tracking-wider">${stars}</div>
-                <p class="text-xs text-gray-600 italic leading-relaxed font-medium">"${feedback.review}"</p>
+            <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50">
+                <div class="w-16 h-16 rounded-full mx-auto overflow-hidden bg-cover bg-center" style="background-image: url('${feedback.image}');"></div>
+                <div class="text-yellow-400 text-sm tracking-widest">${stars}</div>
+                <p class="text-[11px] md:text-xs text-gray-500 italic leading-relaxed font-medium">"${feedback.review}"</p>
                 <h5 class="font-bold text-[10px] ${feedback.nameColor} uppercase tracking-widest">— ${feedback.name}</h5>
             </div>
         `;
@@ -57,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const userRating = parseInt(document.getElementById('fb-rating').value);
             const userReview = document.getElementById('fb-review').value;
 
-            // Pick a random color theme
+            // Pick a random color theme for the name
             const themeColors = [
                 { ring: "ring-purple-100", text: "text-purple-600" },
                 { ring: "ring-pink-100", text: "text-pink-600" },
@@ -100,19 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // Reset button state
             submitBtn.innerText = originalBtnText;
             submitBtn.disabled = false;
-            // Generate HTML for each feedback item exactly like the screenshot
-    const testimonialsHTML = feedbackData.map(feedback => {
-        const stars = '★'.repeat(feedback.rating) + '☆'.repeat(5 - feedback.rating);
-
-        return `
-            <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50">
-                <div class="w-16 h-16 rounded-full mx-auto overflow-hidden bg-cover bg-center" style="background-image: url('${feedback.image}');"></div>
-                <div class="text-yellow-400 text-sm tracking-widest">${stars}</div>
-                <p class="text-[11px] md:text-xs text-gray-500 italic leading-relaxed font-medium">"${feedback.review}"</p>
-                <h5 class="font-bold text-[10px] ${feedback.nameColor} uppercase tracking-widest">— ${feedback.name}</h5>
-            </div>
-        `;
-    }).join('');
         });
     }
 });
