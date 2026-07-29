@@ -15,6 +15,32 @@ let selectedWorkshop = {
     price: 0
 };
 
+// Helper function to prevent quotes from breaking HTML attributes
+function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Global Function to Toggle "Read More / Read Less" for Workshops (No quotes added)
+window.toggleEventTextByChar = function(elementId, btnElement) {
+    const textEl = document.getElementById(elementId);
+    if (!textEl) return;
+
+    const isTruncated = textEl.getAttribute('data-is-truncated') === 'true';
+    
+    if (isTruncated) {
+        // Expand the text
+        textEl.innerText = textEl.getAttribute('data-fulltext');
+        textEl.setAttribute('data-is-truncated', 'false');
+        btnElement.innerText = 'Read Less';
+    } else {
+        // Collapse the text
+        textEl.innerText = textEl.getAttribute('data-truncated');
+        textEl.setAttribute('data-is-truncated', 'true');
+        btnElement.innerText = 'Read More';
+    }
+}
+
 // 2. Fetch Events Dynamically from Supabase
 async function fetchEvents() {
     try {
@@ -46,7 +72,8 @@ async function fetchEvents() {
 
         let htmlContent = "";
 
-        events.forEach(event => {
+        // Added index parameter to the forEach loop to generate unique IDs
+        events.forEach((event, index) => {
             const safeTitle = event.title ? event.title.replace(/"/g, '&quot;') : '';
             const safeDate = event.date ? event.date.replace(/"/g, '&quot;') : '';
             const safeLocation = event.location ? event.location.replace(/"/g, '&quot;') : 'Hyderabad (Venue TBA)';
@@ -54,6 +81,12 @@ async function fetchEvents() {
             const safePasses = event.ticket_passes ? JSON.stringify(event.ticket_passes).replace(/"/g, '&quot;') : '[]';
             const eventPrice = event.price ? parseInt(event.price) : 0;
             
+            // Character Truncation Logic for Workshop Description
+            const descId = `event-desc-${index}`;
+            const fullText = event.description || "";
+            const isLongText = fullText.length > 100;
+            const truncatedText = isLongText ? fullText.substring(0, 100) + '...' : fullText;
+
             htmlContent += `
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group">
                     <div>
@@ -71,7 +104,19 @@ async function fetchEvents() {
                                 <p class="text-xs font-bold text-pink-500 tracking-wide uppercase">📍 ${safeLocation}</p>
                             </div>
                             
-                            <p class="text-gray-600 text-sm font-medium leading-relaxed">${event.description}</p>
+                            <!-- Updated Description with Truncation -->
+                            <p id="${descId}" 
+                               data-fulltext="${escapeHTML(fullText)}" 
+                               data-truncated="${escapeHTML(truncatedText)}" 
+                               data-is-truncated="true"
+                               class="text-gray-600 text-sm font-medium leading-relaxed transition-all duration-300">
+                                ${truncatedText}
+                            </p>
+                            ${isLongText ? `
+                                <button onclick="toggleEventTextByChar('${descId}', this)" class="text-purple-600 font-bold text-xs mt-1 hover:underline focus:outline-none">
+                                    Read More
+                                </button>
+                            ` : ''}
                         </div>
                     </div>
                     <div class="p-6 pt-0 mt-auto">
