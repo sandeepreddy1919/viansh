@@ -29,6 +29,72 @@ window.toggleTextByChar = function(elementId, btnElement) {
     }
 }
 
+// Setup Carousel Navigation for Mobile
+function setupCarousel(totalCards) {
+    const container = document.getElementById('testimonials-container');
+    const prevBtn = document.getElementById('prev-testimonial');
+    const nextBtn = document.getElementById('next-testimonial');
+    const dotsContainer = document.getElementById('carousel-dots');
+
+    if (!container || !dotsContainer) return;
+
+    let currentIndex = 0;
+
+    // Generate dots
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('button');
+        dot.className = `h-2 rounded-full transition-all duration-300 ${i === 0 ? 'w-6 bg-purple-950' : 'w-2 bg-gray-300'}`;
+        dot.setAttribute('aria-label', `Slide ${i + 1}`);
+        dot.addEventListener('click', () => {
+            currentIndex = i;
+            scrollToIndex(currentIndex);
+        });
+        dotsContainer.appendChild(dot);
+    }
+
+    const scrollToIndex = (index) => {
+        const cards = container.children;
+        if (cards.length === 0) return;
+        const card = cards[0];
+        const cardWidth = card.offsetWidth;
+        const style = window.getComputedStyle(container);
+        const gap = parseInt(style.gap) || 24;
+        
+        container.scrollTo({ left: index * (cardWidth + gap), behavior: 'smooth' });
+    };
+
+    const updateActiveDot = () => {
+        const cards = container.children;
+        if (cards.length === 0) return;
+        const card = cards[0];
+        const cardWidth = card.offsetWidth;
+        const style = window.getComputedStyle(container);
+        const gap = parseInt(style.gap) || 24;
+        
+        currentIndex = Math.round(container.scrollLeft / (cardWidth + gap));
+        const dots = dotsContainer.children;
+        for (let i = 0; i < dots.length; i++) {
+            if (dots[i]) {
+                dots[i].className = `h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-purple-950' : 'w-2 bg-gray-300'}`;
+            }
+        }
+    };
+
+    container.addEventListener('scroll', updateActiveDot);
+
+    if (prevBtn && nextBtn) {
+        prevBtn.onclick = () => {
+            currentIndex = Math.max(currentIndex - 1, 0);
+            scrollToIndex(currentIndex);
+        };
+        nextBtn.onclick = () => {
+            currentIndex = Math.min(currentIndex + 1, totalCards - 1);
+            scrollToIndex(currentIndex);
+        };
+    }
+}
+
 // Fetch data from Supabase and render Feedback
 async function loadTestimonials() {
     const container = document.getElementById('testimonials-container');
@@ -42,7 +108,7 @@ async function loadTestimonials() {
             .from('feedback')
             .select('*')
             .order('created_at', { ascending: false })
-            .limit(3);
+            .limit(5);
 
         if (error) throw error;
 
@@ -61,7 +127,7 @@ async function loadTestimonials() {
             const truncatedText = isLongText ? fullText.substring(0, 100) + '...' : fullText;
 
             return `
-                <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50 flex flex-col justify-between flex-shrink-0 w-[85%] sm:w-[380px] md:w-auto snap-center">
+                <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50 flex flex-col justify-between flex-shrink-0 w-full md:w-auto snap-center">
                     <div>
                         <div class="w-16 h-16 rounded-full mx-auto overflow-hidden bg-cover bg-center mb-2" style="background-image: url('${feedback.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}');"></div>
                         <div class="text-yellow-400 text-sm tracking-widest">${stars}</div>
@@ -86,6 +152,7 @@ async function loadTestimonials() {
         }).join('');
 
         container.innerHTML = testimonialsHTML;
+        setupCarousel(feedbackData.length);
     } catch (err) {
         console.error("Supabase Fetch Error:", err);
         container.innerHTML = "<p class='text-red-400 text-sm'>Could not load feedback at this time.</p>";
