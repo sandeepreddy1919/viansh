@@ -38,8 +38,6 @@ function setupCarousel(totalCards) {
 
     if (!container || !dotsContainer) return;
 
-    let currentIndex = 0;
-
     // Generate dots
     dotsContainer.innerHTML = '';
     for (let i = 0; i < totalCards; i++) {
@@ -47,37 +45,18 @@ function setupCarousel(totalCards) {
         dot.className = `h-2 rounded-full transition-all duration-300 ${i === 0 ? 'w-6 bg-purple-950' : 'w-2 bg-gray-300'}`;
         dot.setAttribute('aria-label', `Slide ${i + 1}`);
         dot.addEventListener('click', () => {
-            currentIndex = i;
-            scrollToIndex(currentIndex);
+            const cardWidth = container.offsetWidth;
+            container.scrollTo({ left: cardWidth * i, behavior: 'smooth' });
         });
         dotsContainer.appendChild(dot);
     }
 
-    const scrollToIndex = (index) => {
-        const cards = container.children;
-        if (cards.length === 0) return;
-        const card = cards[0];
-        const cardWidth = card.offsetWidth;
-        const style = window.getComputedStyle(container);
-        const gap = parseInt(style.gap) || 24;
-        
-        container.scrollTo({ left: index * (cardWidth + gap), behavior: 'smooth' });
-    };
-
     const updateActiveDot = () => {
-        const cards = container.children;
-        if (cards.length === 0) return;
-        const card = cards[0];
-        const cardWidth = card.offsetWidth;
-        const style = window.getComputedStyle(container);
-        const gap = parseInt(style.gap) || 24;
-        
-        currentIndex = Math.round(container.scrollLeft / (cardWidth + gap));
+        const cardWidth = container.offsetWidth || 1;
+        const currentIndex = Math.round(container.scrollLeft / cardWidth);
         const dots = dotsContainer.children;
         for (let i = 0; i < dots.length; i++) {
-            if (dots[i]) {
-                dots[i].className = `h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-purple-950' : 'w-2 bg-gray-300'}`;
-            }
+            dots[i].className = `h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-purple-950' : 'w-2 bg-gray-300'}`;
         }
     };
 
@@ -85,12 +64,12 @@ function setupCarousel(totalCards) {
 
     if (prevBtn && nextBtn) {
         prevBtn.onclick = () => {
-            currentIndex = Math.max(currentIndex - 1, 0);
-            scrollToIndex(currentIndex);
+            const cardWidth = container.offsetWidth;
+            container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
         };
         nextBtn.onclick = () => {
-            currentIndex = Math.min(currentIndex + 1, totalCards - 1);
-            scrollToIndex(currentIndex);
+            const cardWidth = container.offsetWidth;
+            container.scrollBy({ left: cardWidth, behavior: 'smooth' });
         };
     }
 }
