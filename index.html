@@ -442,7 +442,8 @@
             </div>
         </div>
     </section>
-<!-- Dynamic Testimonials Section (Matches Screenshot) -->
+
+    <!-- Dynamic Testimonials Section (Matches Screenshot) -->
     <section class="py-20 splash-testimonials border-y border-gray-100/40 mb-2">
         <div class="max-w-7xl mx-auto px-6">
             
@@ -458,46 +459,52 @@
             
         </div>
     </section>
-   <!-- Submit Feedback Section -->
-<section class="py-6 max-w-2xl mx-auto px-6">
-    <div class="bg-white/90 backdrop-blur-md p-8 rounded-2xl border border-gray-100 shadow-lg">
-        <h3 class="text-2xl font-bold font-script text-center text-purple-950 mb-6">Leave Your Feedback</h3>
+
+   <!-- Submit Feedback Section (UPDATED WITH CUSTOM BACKGROUND) -->
+    <section class="relative py-6 max-w-3xl mx-auto px-6 mb-12 bg-cover bg-center bg-no-repeat rounded-3xl overflow-hidden shadow-xl" style="background-image: url('images/feedback.png');">
         
-        <form id="feedback-form" class="space-y-4">
-            <!-- Name Input -->
-            <div>
-                <label for="fb-name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
-                <input type="text" id="fb-name" required placeholder="e.g. Rahul S." 
-                    class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition">
-            </div>
+        <!-- Background Overlay to make the form readable over your custom image -->
+        <div class="absolute inset-0 bg-white/70 backdrop-blur-md z-0"></div>
 
-            <!-- Rating Dropdown -->
-            <div>
-                <label for="fb-rating" class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
-                <select id="fb-rating" class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition text-gray-600">
-                    <option value="5">★★★★★ (5 Stars)</option>
-                    <option value="4">★★★★☆ (4 Stars)</option>
-                    <option value="3">★★★☆☆ (3 Stars)</option>
-                    <option value="2">★★☆☆☆ (2 Stars)</option>
-                    <option value="1">★☆☆☆☆ (1 Star)</option>
-                </select>
-            </div>
+        <div class="relative z-10 p-8 border border-gray-100/50 rounded-2xl">
+            <h3 class="text-2xl font-bold font-script text-center text-purple-950 mb-6">Leave Your Feedback</h3>
+            
+            <form id="feedback-form" class="space-y-4">
+                <!-- Name Input -->
+                <div>
+                    <label for="fb-name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                    <input type="text" id="fb-name" required placeholder="e.g. Rahul S." 
+                        class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition">
+                </div>
 
-            <!-- Review Textarea -->
-            <div>
-                <label for="fb-review" class="block text-sm font-medium text-gray-700 mb-1">Your Review</label>
-                <textarea id="fb-review" required rows="3" placeholder="Tell us about your experience..." 
-                    class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition resize-none"></textarea>
-            </div>
+                <!-- Rating Dropdown -->
+                <div>
+                    <label for="fb-rating" class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                    <select id="fb-rating" class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition text-gray-600">
+                        <option value="5">★★★★★ (5 Stars)</option>
+                        <option value="4">★★★★☆ (4 Stars)</option>
+                        <option value="3">★★★☆☆ (3 Stars)</option>
+                        <option value="2">★★☆☆☆ (2 Stars)</option>
+                        <option value="1">★☆☆☆☆ (1 Star)</option>
+                    </select>
+                </div>
 
-            <!-- Submit Button -->
-            <button type="submit" 
-                class="w-full bg-purple-950 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-800 transition duration-300 shadow-md">
-                Post Feedback
-            </button>
-        </form>
-    </div>
-</section>
+                <!-- Review Textarea -->
+                <div>
+                    <label for="fb-review" class="block text-sm font-medium text-gray-700 mb-1">Your Review</label>
+                    <textarea id="fb-review" required rows="3" placeholder="Tell us about your experience..." 
+                        class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition resize-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                    class="w-full bg-purple-950 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-800 transition duration-300 shadow-md">
+                    Post Feedback
+                </button>
+            </form>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="contact" class="bg-[#0f1319] text-gray-400 pt-16 pb-8 px-6 text-xs relative scroll-mt-20">
         <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 pb-12 border-b border-gray-800/60">
@@ -557,8 +564,8 @@
 <!-- Add Supabase via CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- feedback script -->
-    <script src="feedbackjs.js"></script>
+<!-- feedback script (UPDATED URL to clear cache) -->
+    <script src="feedbackjs.js?v=2"></script>
     <script src="indexjs.js" type="module"></script>
 </body>
 </html>
