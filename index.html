@@ -97,6 +97,16 @@
             will-change: transform, opacity;
             box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
         }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-none {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="font-sans text-[#2d2d2d] antialiased bg-[#fffcfc]">
@@ -443,41 +453,37 @@
         </div>
     </section>
 
-    <!-- Dynamic Testimonials Section (Matches Screenshot) -->
-    <section class="py-20 splash-testimonials border-y border-gray-100/40 mb-2">
+    <!-- Dynamic Testimonials Section (Updated for side-by-side mobile scroll) -->
+    <section class="py-20 splash-testimonials border-y border-gray-100/40 mb-2 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             
-            <!-- Title exactly like the image -->
             <div class="text-center mb-12">
                 <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-950 font-script">What Our Students Say</h2>
             </div>
             
-            <!-- The exact ID your JavaScript is looking for -->
-            <div id="testimonials-container" class="grid md:grid-cols-3 gap-8">
+            <!-- Side-by-side flex scroll on mobile, 3-column grid on desktop -->
+            <div id="testimonials-container" class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scroll-smooth scrollbar-none">
                 <!-- Database cards will load here -->
             </div>
             
         </div>
     </section>
 
-   <!-- Submit Feedback Section (UPDATED WITH CUSTOM BACKGROUND) -->
-    <section class="relative py-6 max-w-3xl mx-auto px-6 mb-12 bg-cover bg-center bg-no-repeat rounded-3xl overflow-hidden shadow-xl" style="background-image: url('images/feedback.png');">
+   <!-- Submit Feedback Section -->
+    <section class="relative py-12 max-w-3xl mx-auto px-6 mb-12 bg-cover bg-center bg-no-repeat rounded-3xl overflow-hidden shadow-xl" style="background-image: url('images/YOUR_CUSTOM_BACKGROUND.jpg');">
         
-        <!-- Background Overlay to make the form readable over your custom image -->
         <div class="absolute inset-0 bg-white/70 backdrop-blur-md z-0"></div>
 
         <div class="relative z-10 p-8 border border-gray-100/50 rounded-2xl">
             <h3 class="text-2xl font-bold font-script text-center text-purple-950 mb-6">Leave Your Feedback</h3>
             
             <form id="feedback-form" class="space-y-4">
-                <!-- Name Input -->
                 <div>
                     <label for="fb-name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
                     <input type="text" id="fb-name" required placeholder="e.g. Rahul S." 
                         class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition">
                 </div>
 
-                <!-- Rating Dropdown -->
                 <div>
                     <label for="fb-rating" class="block text-sm font-medium text-gray-700 mb-1">Rating</label>
                     <select id="fb-rating" class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition text-gray-600">
@@ -489,14 +495,12 @@
                     </select>
                 </div>
 
-                <!-- Review Textarea -->
                 <div>
                     <label for="fb-review" class="block text-sm font-medium text-gray-700 mb-1">Your Review</label>
                     <textarea id="fb-review" required rows="3" placeholder="Tell us about your experience..." 
                         class="w-full rounded-lg border border-gray-200 p-3 text-sm focus:ring-2 focus:ring-purple-300 focus:border-purple-400 outline-none transition resize-none"></textarea>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" 
                     class="w-full bg-purple-950 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-800 transition duration-300 shadow-md">
                     Post Feedback
@@ -564,7 +568,7 @@
 <!-- Add Supabase via CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- feedback script (UPDATED URL to clear cache) -->
+<!-- feedback script -->
     <script src="feedbackjs.js?v=2"></script>
     <script src="indexjs.js" type="module"></script>
 </body>

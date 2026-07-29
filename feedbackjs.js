@@ -52,7 +52,6 @@ async function loadTestimonials() {
         }
 
         const testimonialsHTML = feedbackData.map((feedback, index) => {
-            // Failsafe in case rating is missing
             const safeRating = feedback.rating ? parseInt(feedback.rating) : 5;
             const stars = '★'.repeat(safeRating) + '☆'.repeat(5 - safeRating);
             const reviewId = `fb-review-${index}`;
@@ -62,7 +61,7 @@ async function loadTestimonials() {
             const truncatedText = isLongText ? fullText.substring(0, 100) + '...' : fullText;
 
             return `
-                <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50 flex flex-col justify-between">
+                <div class="bg-white p-8 rounded-2xl text-center space-y-4 shadow-sm border border-gray-50 flex flex-col justify-between flex-shrink-0 w-[85%] sm:w-[380px] md:w-auto snap-center">
                     <div>
                         <div class="w-16 h-16 rounded-full mx-auto overflow-hidden bg-cover bg-center mb-2" style="background-image: url('${feedback.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}');"></div>
                         <div class="text-yellow-400 text-sm tracking-widest">${stars}</div>
@@ -109,12 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 feedbackForm.appendChild(msgDiv);
             }
 
-            // Safely grab inputs
             const nameInput = document.getElementById('fb-name');
             const ratingInput = document.getElementById('fb-rating');
             const reviewInput = document.getElementById('fb-review');
 
-            // Validation: Ensure elements exist and have values
             if (!nameInput || !reviewInput || !nameInput.value.trim() || !reviewInput.value.trim()) {
                 msgDiv.className = 'mt-4 text-center font-bold text-sm text-red-500';
                 msgDiv.innerText = "Please fill out all fields before submitting.";
@@ -135,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const newFeedback = {
                 name: userName,
-                rating: userRating || 5, // Fallback to 5 if NaN
+                rating: userRating || 5, 
                 review: userReview,
                 ringColor: randomTheme.ring,
                 nameColor: randomTheme.text,
@@ -155,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     .from('feedback')
                     .insert([newFeedback]);
 
-                if (error) throw error; // Pass error to catch block
+                if (error) throw error; 
 
                 loadTestimonials();
                 feedbackForm.reset(); 
