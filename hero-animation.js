@@ -13,23 +13,23 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 // 2. The 13 Layout Slots (Calibrated with proper gaps, outer ones allowed to gracefully crop/cut)
 const layoutSlots = [
   // --- COLUMN 3: THE MIDDLE (3 Images) ---
-  { x: '0vw',   y: '0vh',   scale: 1.05, rot: 0 },   // True Center (Behind main text)
-  { x: '0vw',   y: '-42vh', scale: 0.95, rot: -2 },  // Top Center
-  { x: '0vw',   y: '42vh',  scale: 0.95, rot: 2 },   // Bottom Center
+  { x: '0vw',   y: '0vh',   scale: 0.735, rot: 0 },   // True Center (Behind main text)
+  { x: '0vw',   y: '-29.4vh', scale: 0.665, rot: -2 },  // Top Center
+  { x: '0vw',   y: '29.4vh',  scale: 0.665, rot: 2 },   // Bottom Center
 
   // --- COLUMN 2 & 4: INNER SIDES (2 on Left, 2 on Right) ---
-  { x: '-22vw', y: '-24vh', scale: 0.9,  rot: -3 },  // Inner Left Top
-  { x: '-22vw', y: '24vh',  scale: 1.0,  rot: 2 },   // Inner Left Bottom
-  { x: '22vw',  y: '-24vh', scale: 1.0,  rot: 3 },   // Inner Right Top
-  { x: '22vw',  y: '24vh',  scale: 0.9,  rot: -2 },  // Inner Right Bottom
+  { x: '-15.4vw', y: '-16.8vh', scale: 0.63,  rot: -3 },  // Inner Left Top
+  { x: '-15.4vw', y: '16.8vh',  scale: 0.7,   rot: 2 },   // Inner Left Bottom
+  { x: '15.4vw',  y: '-16.8vh', scale: 0.7,   rot: 3 },   // Inner Right Top
+  { x: '15.4vw',  y: '16.8vh',  scale: 0.63,  rot: -2 },  // Inner Right Bottom
 
   // --- COLUMN 1 & 5: FAR SIDES (3 on Left, 3 on Right - Outer edges bleed/cut cleanly) ---
-  { x: '-46vw', y: '-40vh', scale: 1.15, rot: -5 },  // Far Left Top
-  { x: '-46vw', y: '0vh',   scale: 1.2,  rot: 2 },   // Far Left Middle
-  { x: '-46vw', y: '40vh',  scale: 1.15, rot: -4 },  // Far Left Bottom
-  { x: '46vw',  y: '-40vh', scale: 1.15, rot: 5 },   // Far Right Top
-  { x: '46vw',  y: '0vh',   scale: 1.2,  rot: -2 },  // Far Right Middle
-  { x: '46vw',  y: '40vh',  scale: 1.15, rot: 4 },   // Far Right Bottom
+  { x: '-32.2vw', y: '-28vh', scale: 0.805, rot: -5 },  // Far Left Top
+  { x: '-32.2vw', y: '0vh',   scale: 0.84,  rot: 2 },   // Far Left Middle
+  { x: '-32.2vw', y: '28vh',  scale: 0.805, rot: -4 },  // Far Left Bottom
+  { x: '32.2vw',  y: '-28vh', scale: 0.805, rot: 5 },   // Far Right Top
+  { x: '32.2vw',  y: '0vh',   scale: 0.84,  rot: -2 },  // Far Right Middle
+  { x: '32.2vw',  y: '28vh',  scale: 0.805, rot: 4 },   // Far Right Bottom
 ];
 
 // 3. Main Animation Function
