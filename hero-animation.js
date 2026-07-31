@@ -10,26 +10,26 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// 2. The 13 Layout Slots (Size/scale increased by 20% from previous version)
+// 2. The 13 Layout Slots (Calibrated with proper gaps, outer ones allowed to gracefully crop/cut)
 const layoutSlots = [
   // --- COLUMN 3: THE MIDDLE (3 Images) ---
-  { x: '0vw',   y: '0vh',   scale: 1.26, rot: 0 },   // True Center (Behind main text)
-  { x: '0vw',   y: '-42vh', scale: 1.14, rot: -2 },  // Top Center
-  { x: '0vw',   y: '42vh',  scale: 1.14, rot: 2 },   // Bottom Center
+  { x: '0vw',   y: '0vh',   scale: 1.05, rot: 0 },   // True Center (Behind main text)
+  { x: '0vw',   y: '-42vh', scale: 0.95, rot: -2 },  // Top Center
+  { x: '0vw',   y: '42vh',  scale: 0.95, rot: 2 },   // Bottom Center
 
   // --- COLUMN 2 & 4: INNER SIDES (2 on Left, 2 on Right) ---
-  { x: '-22vw', y: '-24vh', scale: 1.08, rot: -3 },  // Inner Left Top
-  { x: '-22vw', y: '24vh',  scale: 1.2,  rot: 2 },   // Inner Left Bottom
-  { x: '22vw',  y: '-24vh', scale: 1.2,  rot: 3 },   // Inner Right Top
-  { x: '22vw',  y: '24vh',  scale: 1.08, rot: -2 },  // Inner Right Bottom
+  { x: '-22vw', y: '-24vh', scale: 0.9,  rot: -3 },  // Inner Left Top
+  { x: '-22vw', y: '24vh',  scale: 1.0,  rot: 2 },   // Inner Left Bottom
+  { x: '22vw',  y: '-24vh', scale: 1.0,  rot: 3 },   // Inner Right Top
+  { x: '22vw',  y: '24vh',  scale: 0.9,  rot: -2 },  // Inner Right Bottom
 
   // --- COLUMN 1 & 5: FAR SIDES (3 on Left, 3 on Right - Outer edges bleed/cut cleanly) ---
-  { x: '-46vw', y: '-40vh', scale: 1.38, rot: -5 },  // Far Left Top
-  { x: '-46vw', y: '0vh',   scale: 1.44, rot: 2 },   // Far Left Middle
-  { x: '-46vw', y: '40vh',  scale: 1.38, rot: -4 },  // Far Left Bottom
-  { x: '46vw',  y: '-40vh', scale: 1.38, rot: 5 },   // Far Right Top
-  { x: '46vw',  y: '0vh',   scale: 1.44, rot: -2 },  // Far Right Middle
-  { x: '46vw',  y: '40vh',  scale: 1.38, rot: 4 },   // Far Right Bottom
+  { x: '-46vw', y: '-40vh', scale: 1.15, rot: -5 },  // Far Left Top
+  { x: '-46vw', y: '0vh',   scale: 1.2,  rot: 2 },   // Far Left Middle
+  { x: '-46vw', y: '40vh',  scale: 1.15, rot: -4 },  // Far Left Bottom
+  { x: '46vw',  y: '-40vh', scale: 1.15, rot: 5 },   // Far Right Top
+  { x: '46vw',  y: '0vh',   scale: 1.2,  rot: -2 },  // Far Right Middle
+  { x: '46vw',  y: '40vh',  scale: 1.15, rot: 4 },   // Far Right Bottom
 ];
 
 // 3. Main Animation Function
@@ -81,7 +81,7 @@ async function initHeroAnimation() {
 
   // Step B: Pop the very first image (True Center) into view
   if (cards[0]) {
-    tl.to(cards[0], { opacity: 1, scale: 1.32, duration: 1 }, "-=0.5");
+    tl.to(cards[0], { opacity: 1, scale: 1.1, duration: 1 }, "-=0.5");
   }
 
   // Step C: Make all other cards fully visible, stacked behind the first card
