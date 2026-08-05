@@ -11,25 +11,31 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 }
 
 // 2. The 13 Layout Slots (Calibrated with proper gaps, outer ones allowed to gracefully crop/cut)
-cconst layoutSlots = [
+// 2. Responsive Layout Slots (Dynamically scales for mobile to prevent getting stuck)
+const isMobile = window.innerWidth < 768;
+const sMod = isMobile ? 0.55 : 1; // Shrink card size by 45% on mobile
+const yMod = isMobile ? 0.8 : 1;  // Compress vertical spread slightly on mobile
+const xMod = isMobile ? 1.2 : 1;  // Expand horizontal spread slightly to utilize mobile width
+
+const layoutSlots = [
   // --- COLUMN 3: THE MIDDLE (3 Images) ---
-  { x: '0vw',   y: '0vh',   scale: 0.735, rot: 0 },   // True Center (Behind main text)
-  { x: '0vw',   y: '-29.4vh', scale: 0.665, rot: -2 },  // Top Center
-  { x: '0vw',   y: '29.4vh',  scale: 0.665, rot: 2 },   // Bottom Center
+  { x: '0vw',   y: '0vh',   scale: 0.735 * sMod, rot: 0 },   
+  { x: '0vw',   y: `${-29.4 * yMod}vh`, scale: 0.665 * sMod, rot: -2 },  
+  { x: '0vw',   y: `${29.4 * yMod}vh`,  scale: 0.665 * sMod, rot: 2 },   
           
   // --- COLUMN 2 & 4: INNER SIDES (2 on Left, 2 on Right) ---
-  { x: '-15.4vw', y: '-16.8vh', scale: 0.63,  rot: -3 },  // Inner Left Top
-  { x: '-15.4vw', y: '16.8vh',  scale: 0.7,   rot: 2 },   // Inner Left Bottom
-  { x: '15.4vw',  y: '-16.8vh', scale: 0.7,   rot: 3 },   // Inner Right Top
-  { x: '15.4vw',  y: '16.8vh',  scale: 0.63,  rot: -2 },  // Inner Right Bottom
+  { x: `${-15.4 * xMod}vw`, y: `${-16.8 * yMod}vh`, scale: 0.63 * sMod,  rot: -3 },  
+  { x: `${-15.4 * xMod}vw`, y: `${16.8 * yMod}vh`,  scale: 0.7 * sMod,   rot: 2 },   
+  { x: `${15.4 * xMod}vw`,  y: `${-16.8 * yMod}vh`, scale: 0.7 * sMod,   rot: 3 },   
+  { x: `${15.4 * xMod}vw`,  y: `${16.8 * yMod}vh`,  scale: 0.63 * sMod,  rot: -2 },  
 
-  // --- COLUMN 1 & 5: FAR SIDES (Increased vertical spacing to eliminate overlap) ---
-  { x: '-32.2vw', y: '-42vh', scale: 0.72, rot: -5 },  // Far Left Top
-  { x: '-32.2vw', y: '0vh',   scale: 0.75, rot: 2 },   // Far Left Middle
-  { x: '-32.2vw', y: '42vh',  scale: 0.72, rot: -4 },  // Far Left Bottom
-  { x: '32.2vw',  y: '-42vh', scale: 0.72, rot: 5 },   // Far Right Top
-  { x: '32.2vw',  y: '0vh',   scale: 0.75, rot: -2 },  // Far Right Middle
-  { x: '32.2vw',  y: '42vh',  scale: 0.72, rot: 4 },   // Far Right Bottom
+  // --- COLUMN 1 & 5: FAR SIDES (Outer edges) ---
+  { x: `${-32.2 * xMod}vw`, y: `${-42 * yMod}vh`, scale: 0.72 * sMod, rot: -5 },  
+  { x: `${-32.2 * xMod}vw`, y: '0vh',   scale: 0.75 * sMod, rot: 2 },   
+  { x: `${-32.2 * xMod}vw`, y: `${42 * yMod}vh`,  scale: 0.72 * sMod, rot: -4 },  
+  { x: `${32.2 * xMod}vw`,  y: `${-42 * yMod}vh`, scale: 0.72 * sMod, rot: 5 },   
+  { x: `${32.2 * xMod}vw`,  y: '0vh',   scale: 0.75 * sMod, rot: -2 },  
+  { x: `${32.2 * xMod}vw`,  y: `${42 * yMod}vh`,  scale: 0.72 * sMod, rot: 4 },   
 ];
 // 3. Main Animation Function 
 async function initHeroAnimation() {
