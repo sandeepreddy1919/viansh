@@ -36,7 +36,7 @@ const layoutSlots = [
   { x: `${32.2 * xMod}vw`,  y: `${-42 * yMod}vh`, scale: 0.72 * sMod, rot: 5 },   
   { x: `${32.2 * xMod}vw`,  y: '0vh',   scale: 0.75 * sMod, rot: -2 },  
   { x: `${32.2 * xMod}vw`,  y: `${42 * yMod}vh`,  scale: 0.72 * sMod, rot: 4 },   
-];
+]; 
 // 3. Main Animation Function 
 async function initHeroAnimation() {
   const deck = document.getElementById('dynamic-image-deck');
