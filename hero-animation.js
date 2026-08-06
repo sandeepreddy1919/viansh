@@ -10,7 +10,6 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// 2. The 13 Layout Slots (Calibrated with proper gaps, outer ones allowed to gracefully crop/cut)
 // 2. Responsive Layout Slots (Dynamically scales for mobile to prevent getting stuck)
 const isMobile = window.innerWidth < 768;
 const sMod = isMobile ? 0.55 : 1; // Shrink card size by 45% on mobile
@@ -37,6 +36,7 @@ const layoutSlots = [
   { x: `${32.2 * xMod}vw`,  y: '0vh',   scale: 0.75 * sMod, rot: -2 },  
   { x: `${32.2 * xMod}vw`,  y: `${42 * yMod}vh`,  scale: 0.72 * sMod, rot: 4 },   
 ]; 
+
 // 3. Main Animation Function 
 async function initHeroAnimation() {
   const deck = document.getElementById('dynamic-image-deck');
@@ -58,12 +58,24 @@ async function initHeroAnimation() {
     return;
   }
 
-  // Inject Images into DOM (Stacked in the center, transparent & scaled down)
+  // Inject Images into DOM (Stacked in the center, stylized with a dark green and gold framed "board")
   deck.innerHTML = media.map((item) => `
-    <div class="hero-anim-card absolute w-56 md:w-72 aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-white/10 opacity-0 scale-50">
-      ${item.media_type === 'video' 
-        ? `<video src="${item.media_url}" autoplay loop muted playsinline class="w-full h-full object-cover"></video>` 
-        : `<img src="${item.media_url}" class="w-full h-full object-cover" />`}
+    <div class="hero-anim-card absolute w-56 md:w-72 aspect-[4/5] rounded-3xl opacity-0 scale-50 z-30 overflow-visible">
+      <!-- The Stylized Board Surface with dark green and gold border matching the overall luxury theme -->
+      <div class="card-board absolute inset-0 bg-[#004d3d] rounded-3xl border-2 border-[#ffda6d]/80 shadow-3xl">
+        <!-- Internal Gold Detail lines on the board -->
+        <div class="board-detail absolute left-3 top-3 right-3 h-[2px] bg-[#ffda6d]/40"></div>
+        <div class="board-detail absolute left-3 bottom-3 right-3 h-[2px] bg-[#ffda6d]/40"></div>
+        <div class="board-detail absolute top-3 left-3 bottom-3 w-[2px] bg-[#ffda6d]/40"></div>
+        <div class="board-detail absolute top-3 right-3 bottom-3 w-[2px] bg-[#ffda6d]/40"></div>
+
+        <!-- Stylized mount for the image/video, framed with a thick gold border -->
+        <div class="image-mount absolute inset-5 md:inset-6 border-4 border-[#ffda6d] rounded-2xl overflow-hidden shadow-inner">
+          ${item.media_type === 'video' 
+            ? `<video src="${item.media_url}" autoplay loop muted playsinline class="w-full h-full object-cover"></video>` 
+            : `<img src="${item.media_url}" class="w-full h-full object-cover" />`}
+        </div>
+      </div>
     </div>
   `).join('');
 
