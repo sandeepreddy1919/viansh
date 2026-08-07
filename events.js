@@ -1,8 +1,8 @@
 // events.js
 
 // --- SUPABASE CONFIGURATION ---
-const SUPABASE_URL = 'https://hjlhtfdmdiparuywldtu.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_5Gg02Na_CtTTSBXqqSQlDQ_LqEvWUAS';
+const SUPABASE_URL = 'https://nzlnilejmrsmvaambkip.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO';
 
 // Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -28,7 +28,7 @@ async function loadDynamicEventsGrid() {
 
     // 2. Fetch data from Supabase
     const { data: events, error } = await supabase
-        .from('events')
+        .from('eventsgrid')
         .select('*')
         .order('display_order', { ascending: true });
 

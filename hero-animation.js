@@ -1,8 +1,8 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 // 1. Initialize Supabase
-const SUPABASE_URL = 'https://aakrdcywvqebosezmuuu.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_IeskKLdjrWVkh0hELe5X8Q_D43AwIkY';
+const SUPABASE_URL = 'https://nzlnilejmrsmvaambkip.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO';
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Register GSAP ScrollTrigger plugin safely

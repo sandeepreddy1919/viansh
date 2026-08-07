@@ -1,8 +1,8 @@
 // 1. Initialize Supabase
 const { createClient } = supabase;
 
-const supabaseUrl = 'https://mwqxolqhixjgoqivmcor.supabase.co';
-const supabaseKey = 'sb_publishable_922Js1DXmj8ZbtfctVPckQ_xWW7rSRn';
+const supabaseUrl = 'https://nzlnilejmrsmvaambkip.supabase.co';
+const supabaseKey = 'sb_publishable_sDau1lh7K-BZmQKs8OEA2A_xmmtg6pO';
 const supabaseClient = createClient(supabaseUrl, supabaseKey);
 
 // Helper function for HTML escaping
@@ -187,14 +187,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ];
             const randomTheme = themeColors[Math.floor(Math.random() * themeColors.length)];
 
-            const newFeedback = {
-                name: userName,
-                rating: userRating || 5, 
-                review: userReview,
-                ringColor: randomTheme.ring,
-                nameColor: randomTheme.text,
-                image: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' 
-            };
+const newFeedback = {
+    name: userName,
+    rating: userRating || 5, 
+    review: userReview,
+    ring_color: randomTheme.ring, // Changed from ringColor
+    name_color: randomTheme.text, // Changed from nameColor
+    image: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' 
+};
 
             const submitBtn = feedbackForm.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn ? submitBtn.innerText : "Submit";
