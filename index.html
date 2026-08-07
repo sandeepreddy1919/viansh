@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0;500;0;600;0;700;1;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Satisfy&display=swap" rel="stylesheet">
     <link rel="icon" href="data:,">
@@ -324,34 +325,97 @@
         </div>
     </div>
 </section>
-    <!-- Collaboration Section -->
-    <section class="max-w-7xl mx-auto px-6 py-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div class="flex flex-col justify-center">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-xl">
-                        🤝
-                    </div>
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-bold font-serif text-slate-900">Collaborate With Us</h2>
-                        <p class="text-xs text-red-500 font-bold uppercase tracking-widest mt-1">✨ Calling All Artists</p>
-                    </div>
+
+<!-- EVENTS THIS WEEK / BOOK LIVE CTA SECTION                  -->
+
+<section class="py-20 px-4 bg-white text-center relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- Main Heading -->
+        <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight mb-6">
+            Events this Week
+        </h2>
+
+        <!-- Description Paragraph -->
+        <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed mb-10">
+            From thought-provoking meetups to creative art workshops, there’s always something happening at Viansh! Check out what’s coming up and save your spot before FOMO hits!
+        </p>
+
+        <!-- CTA Button Container with Pointer Note -->
+        <div class="relative inline-flex flex-col md:flex-row items-center justify-center gap-4 my-2">
+            
+            <!-- Register Now Button (Redirects to Book Live Page) -->
+            <a href="EVENTR.html" 
+               class="bg-black hover:bg-slate-800 text-white font-bold text-base md:text-lg px-8 py-4 rounded-full shadow-2xl hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 z-10">
+                Register Now
+            </a>
+
+            <!-- Handwritten Pointer Note & Arrow -->
+            <div class="md:absolute md:left-[102%] md:top-1/2 md:-translate-y-1/2 flex items-center gap-3 mt-4 md:mt-0 whitespace-nowrap">
+                
+                <!-- Curved Arrow Pointing Left (Visible on desktop) -->
+                <svg class="w-14 h-10 text-slate-900 hidden md:block transform -rotate-6" viewBox="0 0 100 50" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M 90 40 Q 40 40 10 15" />
+                    <path d="M 10 15 L 22 12" />
+                    <path d="M 10 15 L 18 27" />
+                </svg>
+
+                <!-- Playful Text & Emojis -->
+                <div class="text-left font-script text-lg sm:text-xl text-slate-800 leading-snug">
+                    <p class="flex items-center gap-1">
+                        <span class="text-xl">😳</span> Your presence here is
+                    </p>
+                    <p>making this button blush!</p>
+                    <p class="flex items-center gap-1">
+                        Click to calm it. <span class="text-xl">😌</span>
+                    </p>
                 </div>
-                
-                <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-6">
-                    Are you an artist, creator, or craft enthusiast with a brilliant idea? We are constantly looking to expand our creative horizons and bring fresh, innovative experiences to our community. Whether you specialize in a traditional art form, modern crafts, digital design, or experiential setups, Viansh is the perfect platform to showcase your talent.
-                </p>
-                
-                <a href="https://wa.me/918186854511" target="_blank" class="text-red-500 text-xs font-extrabold uppercase tracking-widest hover:text-red-600 transition">
-                    + GET IN TOUCH
-                </a>
+
             </div>
 
-            <div class="w-full">
-                <img src="images/colab.png" alt="Collaborate with Viansh" class="w-full h-auto object-contain rounded-2xl">
+        </div>
+
+    </div>
+</section>
+    <!-- Collaboration Section -->
+<section class="max-w-7xl mx-auto my-12 px-6 sm:px-12 py-16 rounded-3xl relative overflow-hidden bg-cover bg-center bg-no-repeat shadow-sm" style="background-image: url('images/private.png');">
+    
+    <!-- Background Overlay (Ensures text readability over images/private.png) -->
+    <div class="absolute inset-0 bg-white/85 backdrop-blur-[2px]"></div>
+
+    <!-- Content Grid -->
+    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        <!-- Left Text Column -->
+        <div class="flex flex-col justify-center">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-white/90 shadow-xs rounded-full flex items-center justify-center text-xl shrink-0">
+                    🤝
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold font-serif text-slate-900">Collaborate With Us</h2>
+                    <p class="text-xs text-red-500 font-bold uppercase tracking-widest mt-1">✨ Calling All Artists</p>
+                </div>
+            </div>
+            
+            <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-6">
+                Are you an artist, creator, or craft enthusiast with a brilliant idea? We are constantly looking to expand our creative horizons and bring fresh, innovative experiences to our community. Whether you specialize in a traditional art form, modern crafts, digital design, or experiential setups, Viansh is the perfect platform to showcase your talent.
+            </p>
+            
+            <div>
+                <a href="https://wa.me/918186854511" target="_blank" class="inline-block text-red-500 text-xs font-extrabold uppercase tracking-widest hover:text-red-600 transition hover:translate-x-1 duration-200">
+                    + GET IN TOUCH →
+                </a>
             </div>
         </div>
-    </section>
+
+        <!-- Right Image Column -->
+        <div class="w-full">
+            <img src="images/colab.png" alt="Collaborate with Viansh" class="w-full h-auto object-contain rounded-2xl shadow-md">
+        </div>
+
+    </div>
+</section>
 
     <!-- Gallery Section -->
     <section id="gallery" class="py-16 splash-gallery border-y border-gray-100/60 mb-2">
